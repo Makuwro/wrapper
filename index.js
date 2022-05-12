@@ -1,6 +1,3 @@
-// Default class
-export {default as default} from "./classes/Client.js";
-
 // Makuwro classes
 export * from "./classes/Account.js";
 export * from "./classes/Art.js";
