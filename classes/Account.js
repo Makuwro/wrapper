@@ -2,7 +2,7 @@
  * @prop {string} id Represents the account ID
  * @prop {string} username Represents the account unique name
  */
-export class Account {
+export default class Account {
 
   constructor(data, client) {
 

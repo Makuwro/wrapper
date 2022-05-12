@@ -6,7 +6,7 @@ import Account from "./Account.js";
  * @prop {string} [displayName] The user's display name.
  * @prop {boolean} isStaff True if the user is a Makuwro staff member.
  */
-export class User extends Account {
+export default class User extends Account {
 
   constructor(data, client) {
 
