@@ -1,4 +1,3 @@
-import WebSocket from "ws";
 import UndefinedVariableError from "./errors/UndefinedVariableError.js";
 import User from "./User.js";
 
@@ -34,24 +33,6 @@ export default class Client {
 
     // Now try connecting to the server.
     this.ws = new WebSocket(Client.endpoints[mode].websocket);
-
-    this.ws.on("open", () => {
-
-
-
-    });
-
-    this.ws.on("message", () => {
-
-
-
-    });
-
-    this.ws.on("close", () => {
-
-      this.ws = undefined;
-
-    });
 
   }
   
