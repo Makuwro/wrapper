@@ -5,7 +5,7 @@ import User from "./User.js";
  * Represents a client.
  * @property {string} [token] The token of the user account.
  */
-export default class Client {
+export class Client {
 
   static endpoints = {
     prod: {
