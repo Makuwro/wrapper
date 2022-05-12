@@ -17,8 +17,8 @@ export default class Client {
       websocket: "ws://localhost:3001"
     }
   }
-
-  mode = "prod";
+  static mode = "dev";
+  timeout = 15000;
 
   constructor(token) {
 
@@ -32,7 +32,15 @@ export default class Client {
   async connect() {
 
     // Now try connecting to the server.
-    this.ws = new WebSocket(Client.endpoints[mode].websocket);
+    this.ws = new WebSocket(Client.endpoints[Client.mode].websocket);
+
+    // Check if we have a token.
+    if (this.token) {
+
+      // Verify that the user is authenticated.
+      await this.getAuthenticatedUser();
+
+    }
 
   }
   
@@ -153,7 +161,9 @@ export default class Client {
 
       }
 
-      const response = await fetch(`${Client.endpoints[mode].rest}accounts/user`, {
+      const controller = new AbortController();
+      setTimeout(() => controller.abort(), this.timeout);
+      const response = await fetch(`${Client.endpoints[Client.mode].rest}accounts/user`, {
         headers: {
           token: this.token
         },
@@ -198,7 +208,7 @@ export default class Client {
     try {
 
       // Now ask the server for some search results.
-      const response = await fetch(`${Client.endpoints[mode].rest}search?query=${query}`);
+      const response = await fetch(`${Client.endpoints[Client.mode].rest}search?query=${query}`);
       if (!response.ok) {
 
         throw new Error();
