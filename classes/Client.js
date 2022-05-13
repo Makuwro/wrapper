@@ -183,7 +183,7 @@ export default class Client {
     // Get the user data from the server.
     const controller = new AbortController();
     setTimeout(() => controller.abort(), this.timeout);
-    const response = await fetch(`${this.endpoint.rest}accounts/user${self ? "" : `s/${username}`}`, {
+    const response = await fetch(`${this.endpoints.rest}accounts/user${self ? "" : `s/${username}`}`, {
       headers: {
         token: this.token
       },
