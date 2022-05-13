@@ -164,7 +164,7 @@ export default class Client {
   async getUser({username, id} = {}) {
 
     // Check if we're getting ourselves.
-    const self = (!username && !id) || id === this.user.id || username.toLowerCase() === this.username.toLowerCase();
+    const self = (!username && !id) || id === this.user?.id || username?.toLowerCase() === this.user?.username.toLowerCase();
     if (self) {
       
       if (this.user) {
