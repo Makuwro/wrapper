@@ -23,7 +23,7 @@ export default class Client {
   constructor(token) {
 
     this.token = token;
-    this.endpoints = endpoints[this.mode];
+    this.endpoints = Client.endpoints[this.mode];
 
   }
 
