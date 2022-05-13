@@ -17,12 +17,13 @@ export default class Client {
       websocket: "ws://localhost:3001"
     }
   }
-  static mode = "dev";
+  mode = "dev";
   timeout = 15000;
 
   constructor(token) {
 
     this.token = token;
+    this.endpoints = endpoints[this.mode];
 
   }
 
@@ -32,7 +33,7 @@ export default class Client {
   async connect() {
 
     // Now try connecting to the server.
-    this.ws = new WebSocket(Client.endpoints[Client.mode].websocket);
+    this.ws = new WebSocket(this.endpoints.websocket);
 
     // Check if we have a token.
     if (this.token) {
@@ -63,7 +64,7 @@ export default class Client {
     form.append("birthDate", birthDate);
     form.append("email", email);
 
-    const response = await fetch(`${Client.endpoints[mode].rest}accounts/user`, {
+    const response = await fetch(`${this.endpoints.rest}accounts/user`, {
       method: "POST",
       body: form
     });
@@ -94,38 +95,16 @@ export default class Client {
   }
 
   /**
-   * Searches for an error from a specified code, and then throws it with the error message as a parameter.
-   * 
-   * If the code is not found, an UnknownError object is thrown instead.
-   * @param {number} code The error code.
-   * @param {string} [message] The error message.
-   * @returns {Error} The error. 
-   */
-  static throwErrorFromCode(code, message) {
-
-    switch (code) {
-
-      case 0:
-        break;
-
-      default:
-        throw new Error(message);
-
-    }
-
-  }
-
-  /**
    * Requests a new token from the server. 
    * 
    * Errors if the username-password combination is incorrect.
-   * @param {string} username The username of the user account.
-   * @param {string} password The password of the user account.
-   * @returns {string} A token string.
+   * @param {String} username The username of the user account.
+   * @param {String} password The password of the user account.
+   * @returns {String} A token string.
    */
   async generateToken(username, password) {
 
-    const response = await fetch(`${Client.endpoints[mode].rest}accounts/user/sessions`, {
+    const response = await fetch(`${this.endpoints.rest}accounts/user/sessions`, {
       method: "POST",
       headers: {
         "Content-Type": "multipart/form-data",
@@ -161,27 +140,65 @@ export default class Client {
 
       }
 
-      const controller = new AbortController();
-      setTimeout(() => controller.abort(), this.timeout);
-      const response = await fetch(`${Client.endpoints[Client.mode].rest}accounts/user`, {
-        headers: {
-          token: this.token
-        },
-        signal: controller.signal
-      });
-      const data = await response.json();
-
-      if (!response.ok) {
-
-        throwErrorFromCode(data.code, data.message);
-
-      }
-
-      this.user = new User(data, this);
+      this.user = await this.getUser();
 
     }
 
     return this.user;
+
+  }
+
+  /**
+   * Uses a username or an ID to return a user. 
+   * 
+   * If no parameters are provided, the authenticated user is returned, if the Client object holds a valid token.
+   * 
+   * If a username and an ID is provided, the username is prioritized.
+   * 
+   * Errors if no user is found.
+   * @param {Object} [data] An object of the user's username or unique ID.
+   * @param {String} [data.username] The user's username.
+   * @param {String} [data.id] The user's unique ID.
+   * @returns {User} The desired user. 
+   */
+  async getUser({username, id} = {}) {
+
+    // Check if we're getting ourselves.
+    const self = (!username && !id) || id === this.user.id || username.toLowerCase() === this.username.toLowerCase();
+    if (self) {
+      
+      if (this.user) {
+    
+        // No need to waste an API call.
+        return this.user;
+
+      } else if (!this.token) {
+
+        throw new UndefinedVariableError("token");
+
+      }
+
+    }
+
+    // Get the user data from the server.
+    const controller = new AbortController();
+    setTimeout(() => controller.abort(), this.timeout);
+    const response = await fetch(`${this.endpoint.rest}accounts/user${self ? "" : `s/${username}`}`, {
+      headers: {
+        token: this.token
+      },
+      signal: controller.signal
+    });
+    const data = await response.json();
+
+    if (!response.ok) {
+
+      throwErrorFromCode(data.code, data.message);
+
+    }
+
+    // Create a User object from the user data, then return it.
+    return new User(data, this);
 
   }
 
@@ -208,7 +225,7 @@ export default class Client {
     try {
 
       // Now ask the server for some search results.
-      const response = await fetch(`${Client.endpoints[Client.mode].rest}search?query=${query}`);
+      const response = await fetch(`${this.endpoints.rest}search?query=${query}`);
       if (!response.ok) {
 
         throw new Error();
@@ -221,6 +238,28 @@ export default class Client {
     } catch (err) {
 
 
+
+    }
+
+  }
+
+  /**
+   * Searches for an error from a specified code, and then throws it with the error message as a parameter.
+   * 
+   * If the code is not found, an UnknownError object is thrown instead.
+   * @param {number} code The error code.
+   * @param {string} [message] The error message.
+   * @returns {Error} The error. 
+   */
+  static throwErrorFromCode(code, message) {
+
+    switch (code) {
+
+      case 0:
+        break;
+
+      default:
+        throw new Error(message);
 
     }
 
