@@ -5,6 +5,7 @@ import Account from "./Account.js";
  * @prop {string} username The user's username.
  * @prop {string} [displayName] The user's display name.
  * @prop {boolean} isStaff True if the user is a Makuwro staff member.
+ * @prop {boolean} isBanned True if the user is currently banned.
  */
 export default class User extends Account {
 
