@@ -194,21 +194,7 @@ export default class Client {
     }
 
     // Get the user data from the server.
-    const controller = new AbortController();
-    setTimeout(() => controller.abort(), this.timeout);
-    const response = await fetch(`${this.endpoints.rest}accounts/user${self ? "" : `s/${username}`}`, {
-      headers: {
-        token: this.token
-      },
-      signal: controller.signal
-    });
-    const data = await response.json();
-
-    if (!response.ok) {
-
-      Client.throwErrorFromCode(data.code, data.message);
-
-    }
+    const data = await this.requestREST(`accounts/user${self ? "" : `s/${username}`}`);
 
     // Create a User object from the user data.
     const user = new User(data, this);
@@ -222,6 +208,36 @@ export default class Client {
 
     // Return the user object.
     return user;
+
+  }
+
+  /**
+   * Sends a request to the Makuwro API.
+   * @param {String} path The API endpoint.
+   * @returns 
+   */
+  async requestREST(path, {method = "GET", headers = {}}) {
+    
+    const controller = new AbortController();
+    setTimeout(() => controller.abort(), this.timeout);
+    const response = await fetch(`${this.endpoints.rest}${path}`, {
+      headers: this.token ? {
+        ...headers,
+        token: this.token
+      } : headers,
+      signal: controller.signal,
+      method
+    });
+    
+    const data = await response.json();
+
+    if (!response.ok) {
+
+      Client.throwErrorFromCode(data.code, data.message);
+
+    }
+
+    return data;
 
   }
 
