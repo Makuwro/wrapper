@@ -1,5 +1,7 @@
+import UnauthenticatedError from "./errors/UnauthenticatedError.js";
 import UndefinedVariableError from "./errors/UndefinedVariableError.js";
 import User from "./User.js";
+import BlogPost from "./BlogPost.js";
 
 /**
  * Represents a client.
@@ -47,9 +49,31 @@ export default class Client {
     if (this.token) {
 
       // Verify that the user is authenticated.
-      await this.getAuthenticatedUser();
+  /**
+   * Creates a new blog post.
+   * 
+   * Errors if the client's user is not a delegate of the specified owner.
+   * @param {User} [owner] The owner of the blog post. Defaults to the authenticated user.
+   * @returns {BlogPost} A blog post object.
+   */
+  async createBlogPost(owner = this.getUser()) {
+
+    const response = await fetch(`${this.endpoints.rest}contents/blog/${owner.username}`, {
+      method: "POST",
+      headers: {
+        token: this.token
+      }
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+
+      Client.throwErrorFromCode(data.code, data.message);
 
     }
+
+    return new BlogPost(data, this.client);
 
   }
   
