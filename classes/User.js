@@ -23,7 +23,9 @@ export default class User extends Account {
 
     }
 
-    return await super.update(props, this.client);
+  async createBlogPost() {
+
+    return this.client.createBlogPost(this);
 
   }
   
