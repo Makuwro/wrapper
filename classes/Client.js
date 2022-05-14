@@ -14,6 +14,7 @@ import BlogPost from "./BlogPost.js";
  * @prop {String} endpoints.dev.websocket The development websocket endpoint. 
  * @prop {String} [token] The token of the user account.
  * @prop {Integer} timeout The maximum time in milliseconds that a request can take before it times out.
+ * @prop {User} [user] The current, authenticated user.
  */
 export default class Client {
 
