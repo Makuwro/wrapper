@@ -19,9 +19,13 @@ export default class User extends Account {
 
     if (props.password && typeof props.password !== "string") {
 
-      
+      // TODO: Verify password
 
     }
+
+    return await super.update(props, this.client);
+
+  }
 
   async createBlogPost() {
 
