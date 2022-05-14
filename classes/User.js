@@ -32,5 +32,17 @@ export default class User extends Account {
     return this.client.createBlogPost(this);
 
   }
+
+  async getAllBlogPosts() {
+
+    return this.client.getAllBlogPosts(this);
+
+  }
+
+  async getBlogPosts() {
+
+    return this.client.getBlogPosts(this);
+
+  }
   
 }
