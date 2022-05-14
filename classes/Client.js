@@ -172,16 +172,14 @@ export default class Client {
   async getAllBlogPosts(owner = this.getUser()) {
 
     const data = this.requestREST(`contents/blog/${owner.username}`);
-    const posts = [];
 
     for (let i = 0; data.length > i; i++) {
 
-      const post = new BlogPost(data[i]);
-      posts.push(post);
+      data[i] = new BlogPost(data[i]);
 
     }
 
-    return posts;
+    return data;
 
   }
 
