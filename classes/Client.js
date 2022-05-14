@@ -166,7 +166,7 @@ export default class Client {
    * Gets all blog posts that a user posted.
    * 
    * Returns an empty array if the user hasn't posted anything.
-   * @param {*} owner The user to search.
+   * @param {User} owner The user to search.
    * @returns {BlogPost[]} An array of blog posts.
    */
   async getAllBlogPosts(owner = this.getUser()) {
