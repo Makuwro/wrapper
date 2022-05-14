@@ -162,6 +162,47 @@ export default class Client {
   }
 
   /**
+   * Gets all blog posts that a user posted.
+   * 
+   * Returns an empty array if the user hasn't posted anything.
+   * @param {*} owner The user to search.
+   * @returns {BlogPost[]} An array of blog posts.
+   */
+  async getAllBlogPosts(owner = this.getUser()) {
+
+    const data = this.requestREST(`contents/blog/${owner.username}`);
+    const posts = [];
+
+    for (let i = 0; data.length > i; i++) {
+
+      const post = new BlogPost(data[i]);
+      posts.push(post);
+
+    }
+
+    return posts;
+
+  }
+
+  /**
+   * Gets a blog post.
+   * 
+   * Errors if the blog post doesn't exist.
+   * @param {User} [owner] 
+   * @param {String} slug 
+   * @returns {BlogPost} The blog post.
+   */
+  async getBlogPost(owner = this.getUser(), slug) {
+
+    // Get the data from the API.
+    const data = await this.requestREST(`contents/blog/${owner.username}/${slug}`);
+    
+    // Create a BlogPost object from the data.
+    return new BlogPost(data);
+
+  }
+
+  /**
    * Uses a username or an ID to return a user. 
    * 
    * If no parameters are provided, the authenticated user is returned, if the Client object holds a valid token.
