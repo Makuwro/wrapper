@@ -26,14 +26,13 @@ export default class Client {
       rest: "http://localhost:3001/",
       websocket: "ws://localhost:3001"
     }
-  }
-  mode = "dev";
+  };
   timeout = 15000;
 
-  constructor(token) {
+  constructor(token, mode = "dev") {
 
     this.token = token;
-    this.endpoints = Client.endpoints[this.mode];
+    this.endpoints = Client.endpoints[mode];
 
   }
 
@@ -49,6 +48,12 @@ export default class Client {
     if (this.token) {
 
       // Verify that the user is authenticated.
+      await this.getUser();
+
+    }
+
+  }
+
   /**
    * Creates a new blog post.
    * 
@@ -152,31 +157,7 @@ export default class Client {
 
     }
 
-    return token;
-
-  }
-
-  /**
-   * Returns the authenticated user. 
-   * 
-   * Errors if there is no authenticated user.
-   * @returns {User} A User object.
-   */
-  async getAuthenticatedUser() {
-
-    if (!this.user) {
-
-      if (!this.token) {
-
-        throw new UndefinedVariableError("token");
-
-      }
-
-      this.user = await this.getUser();
-
-    }
-
-    return this.user;
+    return data.token;
 
   }
 
@@ -206,7 +187,7 @@ export default class Client {
 
       } else if (!this.token) {
 
-        throw new UndefinedVariableError("token");
+        throw new UnauthenticatedError();
 
       }
 
@@ -225,12 +206,22 @@ export default class Client {
 
     if (!response.ok) {
 
-      throwErrorFromCode(data.code, data.message);
+      Client.throwErrorFromCode(data.code, data.message);
 
     }
 
-    // Create a User object from the user data, then return it.
-    return new User(data, this);
+    // Create a User object from the user data.
+    const user = new User(data, this);
+
+    // Check if we need to save it to the client.
+    if (self) {
+
+      this.user = user;
+
+    }
+
+    // Return the user object.
+    return user;
 
   }
 
