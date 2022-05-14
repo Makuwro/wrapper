@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/Makuwro/wrapper/issues"
   },
-  "homepage": "https://github.com/Makuwro/wrapper#readme"
+  "homepage": "https://github.com/Makuwro/wrapper#readme",
+  "devDependencies": {
+    "eslint": "^8.15.0"
+  }
 }
