@@ -257,7 +257,7 @@ export default class Client {
    * @param {String} path The API endpoint.
    * @returns 
    */
-  async requestREST(path, {method = "GET", headers = {}}) {
+  async requestREST(path, {method = "GET", headers = {}} = {method: "GET", headers: {}}) {
     
     const controller = new AbortController();
     setTimeout(() => controller.abort(), this.timeout);
