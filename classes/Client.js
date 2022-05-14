@@ -3,7 +3,15 @@ import User from "./User.js";
 
 /**
  * Represents a client.
- * @property {string} [token] The token of the user account.
+ * @prop {Object} endpoints An object of API endpoints.
+ * @prop {Object} endpoints.prod An object of production API endpoints.
+ * @prop {String} endpoints.prod.rest The production REST API endpoint.
+ * @prop {String} endpoints.prod.websocket The production websocket endpoint.
+ * @prop {Object} endpoints.dev An object of development API endpoints.
+ * @prop {String} endpoints.dev.rest The development REST API endpoint.
+ * @prop {String} endpoints.dev.websocket The development websocket endpoint. 
+ * @prop {String} [token] The token of the user account.
+ * @prop {Integer} timeout The maximum time in milliseconds that a request can take before it times out.
  */
 export default class Client {
 
