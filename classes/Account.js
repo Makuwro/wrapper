@@ -20,58 +20,39 @@ export default class Account {
 
   }
 
-  async block() {
+  async createArt() {
 
-
-
-  }
-
-  async delete() {
+    return this.client.createArt(this);
 
   }
 
-  async disable() {
+  async createBlogPost() {
 
-
-
-  }
-
-  async follow() {
-
-
+    return this.client.createBlogPost(this);
 
   }
 
-  async getNotifications() {
+  async getAllArt() {
 
-
-
-  }
-
-  static async search() {
-
-    
+    return this.client.getAllArt(this);
 
   }
 
-  async unblock() {
+  async getAllBlogPosts() {
 
-
-
-  }
-
-  async unfollow() {
-
-    
+    return this.client.getAllBlogPosts(this);
 
   }
 
-  /**
-   * Updates a user based on the 
-   */
-  async update({username}) {
+  async getAllCharacters() {
 
+    return this.client.getAllCharacters(this);
 
+  }
+
+  async getBlogPosts() {
+
+    return this.client.getBlogPosts(this);
 
   }
 

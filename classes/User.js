@@ -30,40 +30,4 @@ export default class User extends Account {
 
   }
   
-  async createArt() {
-
-    return this.client.createArt(this);
-
-  }
-
-  async createBlogPost() {
-
-    return this.client.createBlogPost(this);
-
-  }
-
-  async getAllArt() {
-
-    return this.client.getAllArt(this);
-
-  }
-
-  async getAllBlogPosts() {
-
-    return this.client.getAllBlogPosts(this);
-
-  }
-
-  async getAllCharacters() {
-
-    return this.client.getAllCharacters(this);
-
-  }
-
-  async getBlogPosts() {
-
-    return this.client.getBlogPosts(this);
-
-  }
-  
 }
