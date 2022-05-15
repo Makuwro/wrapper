@@ -28,6 +28,12 @@ export default class User extends Account {
 
   }
 
+  async createArt() {
+
+    return this.client.createArt(this);
+
+  }
+
   async createBlogPost() {
 
     return this.client.createBlogPost(this);

@@ -1,6 +1,7 @@
 import UnauthenticatedError from "./errors/UnauthenticatedError.js";
 import UndefinedVariableError from "./errors/UndefinedVariableError.js";
 import User from "./User.js";
+import Art from "./Art.js";
 import BlogPost from "./BlogPost.js";
 
 /**
