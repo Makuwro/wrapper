@@ -351,15 +351,7 @@ export default class Client {
     try {
 
       // Now ask the server for some search results.
-      const response = await fetch(`${this.endpoints.rest}search?query=${query}`);
-      if (!response.ok) {
-
-        throw new Error();
-
-      }
-      
-      // Return the search results.
-      return response.json();
+      const searchResults = await this.requestREST(`search?query=${query}`);
 
     } catch (err) {
 
