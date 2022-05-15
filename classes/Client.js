@@ -197,6 +197,19 @@ export default class Client {
   }
 
   /**
+   * Gets all characters that a user posted.
+   * 
+   * Returns an empty array if the user hasn't posted anything.
+   * @param {User} owner The user to search.
+   * @returns {Character[]} An array of characters.
+   */
+  async getAllCharacters(owner = this.getUser()) {
+
+    return this.getAllContent(Character, owner);
+
+  }
+
+  /**
    * Gets all of a type of content.
    * 
    * Returns an empty array if the user hasn't posted anything.
