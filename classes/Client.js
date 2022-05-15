@@ -331,8 +331,8 @@ export default class Client {
   /**
    * Searches the Makuwro database based on a specific query or content type.
    * @param {string} query A keyword.
-   * @param {int} type A content type.
-   * @returns {[Art | BlogPost | Comment | Character | User]} An array of content.
+   * @param {Number} type A content type.
+   * @returns {Art[] | BlogPost[] | Comment[] | Character[] | User[]} An array of content.
    */
   async search(query, type) {
 
