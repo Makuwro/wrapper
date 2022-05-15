@@ -14,6 +14,8 @@ import Content from "./Content.js";
  */
 export default class BlogPost extends Content {
 
+  static apiDirectoryName = "blogs";
+
   constructor(data, client) {
 
     super(data, client);
