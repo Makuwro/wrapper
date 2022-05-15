@@ -108,10 +108,10 @@ export default class Client {
    * 
    * Errors if the username is taken or protected, the username and/or password are too short or too long, or account creation at the current IP address has been disabled.
    * @param {Object} data An object that represents the account data.
-   * @param {string} data.username The username of the account.
-   * @param {string} data.password The password of the account.
-   * @param {string} data.email The email address of the account owner.
-   * @param {number} data.birthDate The birth date of the account owner.
+   * @param {String} data.username The username of the account.
+   * @param {String} data.password The password of the account.
+   * @param {String} data.email The email address of the account owner.
+   * @param {Number} data.birthDate The birth date of the account owner.
    * @returns {User} A User object.
    */
   async createUser({username, password, birthDate, email}) {
