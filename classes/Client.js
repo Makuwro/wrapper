@@ -3,6 +3,7 @@ import UndefinedVariableError from "./errors/UndefinedVariableError.js";
 import User from "./User.js";
 import Art from "./Art.js";
 import BlogPost from "./BlogPost.js";
+import Character from "./Character.js";
 
 /**
  * Represents a client.
@@ -228,6 +229,20 @@ export default class Client {
   async getBlogPost(owner = this.getUser(), slug) {
 
     return this.getContent(BlogPost, owner, slug);
+
+  }
+
+  /**
+   * Gets a character.
+   * 
+   * Errors if the character doesn't exist.
+   * @param {User} [owner] The owner of the character.
+   * @param {String} slug The unique slug of the character.
+   * @returns {Character} The character.
+   */
+  async getCharacter(owner = this.getUser(), slug) {
+
+    return this.getContent(Character, owner, slug);
 
   }
 
