@@ -56,6 +56,12 @@ export default class Client {
 
   }
 
+  async createArt(owner = this.getUser()) {
+
+    return await this.createContent(Art, owner);
+
+  }
+
   /**
    * Creates a new blog post.
    * 
@@ -65,7 +71,20 @@ export default class Client {
    */
   async createBlogPost(owner = this.getUser()) {
 
-    const response = await fetch(`${this.endpoints.rest}contents/blog/${owner.username}`, {
+    return await this.createContent(BlogPost, owner);
+
+  }
+
+  /**
+   * 
+   * @param {*} type 
+   * @param {*} owner 
+   * @param {*} options 
+   * @returns 
+   */
+  async createContent(type, owner = this.getUser(), options) {
+
+    const response = await fetch(`${this.endpoints.rest}contents/${type.apiDirectoryName}/${owner.username}`, {
       method: "POST",
       headers: {
         token: this.token
@@ -80,7 +99,7 @@ export default class Client {
 
     }
 
-    return new BlogPost(data, this.client);
+    return new type(data, this.client);
 
   }
   
@@ -172,11 +191,25 @@ export default class Client {
    */
   async getAllBlogPosts(owner = this.getUser()) {
 
-    const data = this.requestREST(`contents/blog/${owner.username}`);
+    return this.getAllContent(BlogPost, owner);
+
+  }
+
+  /**
+   * Gets all of a type of content.
+   * 
+   * Returns an empty array if the user hasn't posted anything.
+   * @param {Art | BlogPost | Character} type The class of content to get.
+   * @param {User} [owner] The user to search.
+   * @returns {Art[] | BlogPost[] | Character[]} An array of content.
+   */
+  async getAllContent(type, owner = this.getUser()) {
+
+    const data = this.requestREST(`contents/${type.apiDirectoryName}/${owner.username}`);
 
     for (let i = 0; data.length > i; i++) {
 
-      data[i] = new BlogPost(data[i]);
+      data[i] = new type(data[i]);
 
     }
 
@@ -194,11 +227,24 @@ export default class Client {
    */
   async getBlogPost(owner = this.getUser(), slug) {
 
+    return this.getContent(BlogPost, owner, slug);
+
+  }
+
+  /**
+   * 
+   * @param {Art | BlogPost | Character} type 
+   * @param {User} [owner] 
+   * @param {String} slug 
+   * @returns {Art | BlogPost | Character}
+   */
+  async getContent(type, owner = this.getUser(), slug) {
+
     // Get the data from the API.
-    const data = await this.requestREST(`contents/blog/${owner.username}/${slug}`);
+    const data = await this.requestREST(`contents/${type.apiDirectoryName}/${owner.username}/${slug}`);
     
     // Create a BlogPost object from the data.
-    return new BlogPost(data);
+    return new type(data);
 
   }
 
