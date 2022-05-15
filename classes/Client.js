@@ -184,6 +184,19 @@ export default class Client {
   }
 
   /**
+   * Gets all art that a user posted.
+   * 
+   * Returns an empty array if the user hasn't posted anything.
+   * @param {User} [owner] The user to search.
+   * @returns {Art[]} An array of art.
+   */
+  async getAllArt(owner = this.getUser()) {
+
+    return this.getAllContent(Art, owner);
+
+  }
+
+  /**
    * Gets all blog posts that a user posted.
    * 
    * Returns an empty array if the user hasn't posted anything.
