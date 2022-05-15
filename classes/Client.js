@@ -200,7 +200,7 @@ export default class Client {
    * Gets all blog posts that a user posted.
    * 
    * Returns an empty array if the user hasn't posted anything.
-   * @param {User} owner The user to search.
+   * @param {User} [owner] The user to search.
    * @returns {BlogPost[]} An array of blog posts.
    */
   async getAllBlogPosts(owner = this.getUser()) {
@@ -213,7 +213,7 @@ export default class Client {
    * Gets all characters that a user posted.
    * 
    * Returns an empty array if the user hasn't posted anything.
-   * @param {User} owner The user to search.
+   * @param {User} [owner] The user to search.
    * @returns {Character[]} An array of characters.
    */
   async getAllCharacters(owner = this.getUser()) {
