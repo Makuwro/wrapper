@@ -2,16 +2,18 @@ import Account from "./Account.js";
 
 /**
  * Represents a user.
- * @prop {string} username The user's username.
- * @prop {string} [displayName] The user's display name.
- * @prop {boolean} isStaff True if the user is a Makuwro staff member.
- * @prop {boolean} isBanned True if the user is currently banned.
+ * @prop {String} username The user's username.
+ * @prop {String} [displayName] The user's display name.
+ * @prop {Boolean} isStaff True if the user is a Makuwro staff member.
+ * @prop {Boolean} isBanned True if the user is currently banned.
+ * @prop {Number} lastOnline The time in milliseconds when the user was last online.
  */
 export default class User extends Account {
 
   constructor(data, client) {
 
     super(data, client);
+    this.lastOnline = data.lastOnline;
     this.client = client;
 
   }
@@ -27,7 +29,7 @@ export default class User extends Account {
     return await super.update(props, this.client);
 
   }
-
+  
   async createArt() {
 
     return this.client.createArt(this);
@@ -40,9 +42,21 @@ export default class User extends Account {
 
   }
 
+  async getAllArt() {
+
+    return this.client.getAllArt(this);
+
+  }
+
   async getAllBlogPosts() {
 
     return this.client.getAllBlogPosts(this);
+
+  }
+
+  async getAllCharacters() {
+
+    return this.client.getAllCharacters(this);
 
   }
 
