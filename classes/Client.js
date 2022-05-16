@@ -445,4 +445,23 @@ export default class Client {
 
   }
 
+  async updateBlogPost(username = this.getUser().username, slug, details) {
+
+    // Create FormData from the details.
+    const formData = new FormData();
+    const detailsKeys = Object.keys(details);
+    for (let i = 0; detailsKeys.length; i++) {
+
+      const key = detailsKeys[i];
+      formData.append(key, details[key]);
+
+    }
+
+    // Send a request to the server to update the blog post.
+    await this.requestREST(`contents/blog/${username}/${slug}`, {
+      body: formData
+    });
+
+  }
+
 }
