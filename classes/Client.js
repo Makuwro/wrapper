@@ -191,6 +191,16 @@ export default class Client {
 
   }
 
+  /**
+   * Sends a request to revoke a session token.
+   * @param {string} token The session token to revoke. Defaults to the current session token.
+   */
+  async deleteSessionToken(token = this.token) {
+
+    await this.requestREST("accounts/user/sessions", {headers: {token}});
+
+  }
+
   async editContent(content) {
 
 
