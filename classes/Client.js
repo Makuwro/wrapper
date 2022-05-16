@@ -197,7 +197,10 @@ export default class Client {
    */
   async deleteSessionToken(token = this.token) {
 
-    await this.requestREST("accounts/user/sessions", {headers: {token}});
+    await this.requestREST("accounts/user/sessions", {
+      method: "DELETE",
+      headers: {token}
+    });
 
   }
 
