@@ -14,6 +14,7 @@ export default class Account {
     this.bannerPath = data.bannerPath;
     this.css = data.css;
     this.terms = data.terms;
+    this.isBanned = data.isBanned;
 
     // Save the client.
     this.client = client;

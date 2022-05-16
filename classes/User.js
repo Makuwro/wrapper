@@ -13,6 +13,7 @@ export default class User extends Account {
   constructor(data, client) {
 
     super(data, client);
+    this.isStaff = data.isStaff;
     this.lastOnline = data.lastOnline;
     this.client = client;
 
