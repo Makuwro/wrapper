@@ -13,3 +13,4 @@ export {default as User} from "./classes/User.js";
 // Error classes
 export {default as UndefinedVariableError} from "./classes/errors/UndefinedVariableError.js";
 export {default as UnauthenticatedError} from "./classes/errors/UnauthenticatedError.js";
+export {default as InvalidTokenError} from "./classes/errors/InvalidTokenError.js";
