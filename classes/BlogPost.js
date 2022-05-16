@@ -19,6 +19,7 @@ export default class BlogPost extends Content {
   constructor(data, client) {
 
     super(data, client);
+    this.content = data.content;
     this.title = data.title;
 
   }
