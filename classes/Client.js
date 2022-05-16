@@ -141,27 +141,14 @@ export default class Client {
   }
 
   /**
-   * Disconnects from the Makuwro gateway.
-   */
-  async disconnect() {
-
-    if (this.ws) {
-
-      this.ws.close();
-
-    }
-
-  }
-
-  /**
-   * Requests a new token from the server. 
+   * Requests a new session token from the server. 
    * 
    * Errors if the username-password combination is incorrect.
    * @param {String} username The username of the user account.
    * @param {String} password The password of the user account.
-   * @returns {String} A token string.
+   * @returns {Object} An object containing session information, including the token.
    */
-  async generateToken(username, password) {
+  async createSession(username, password) {
 
     const response = await fetch(`${this.endpoints.rest}accounts/user/sessions`, {
       method: "POST",
@@ -179,7 +166,32 @@ export default class Client {
 
     }
 
-    return data.token;
+    return data;
+
+  }
+
+  /**
+   * Disconnects from the Makuwro gateway.
+   */
+  async disconnect() {
+
+    if (this.ws) {
+
+      this.ws.close();
+
+    }
+
+  }
+
+  async deleteContent(content) {
+
+
+
+  }
+
+  async editContent(content) {
+
+
 
   }
 
