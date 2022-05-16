@@ -1,5 +1,6 @@
 import UnauthenticatedError from "./errors/UnauthenticatedError.js";
 import UndefinedVariableError from "./errors/UndefinedVariableError.js";
+import InvalidTokenError from "./errors/InvalidTokenError.js";
 import User from "./User.js";
 import Art from "./Art.js";
 import BlogPost from "./BlogPost.js";
@@ -449,7 +450,7 @@ export default class Client {
     switch (code) {
 
       case 0:
-        break;
+        throw new InvalidTokenError();
 
       default:
         throw new Error(message);
