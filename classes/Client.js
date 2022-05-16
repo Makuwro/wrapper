@@ -57,9 +57,9 @@ export default class Client {
 
   }
 
-  async createArt(owner = this.getUser()) {
+  async createArt(username = this.getUser().username) {
 
-    return await this.createContent(Art, owner);
+    return await this.createContent(Art, username);
 
   }
 
@@ -67,25 +67,27 @@ export default class Client {
    * Creates a new blog post.
    * 
    * Errors if the client's user is not a delegate of the specified owner.
-   * @param {User} [owner] The owner of the blog post. Defaults to the authenticated user.
+   * @param {string} [username] The owner of the blog post. Defaults to the authenticated user.
    * @returns {BlogPost} A blog post object.
    */
-  async createBlogPost(owner = this.getUser()) {
+  async createBlogPost(username = this.getUser().username) {
 
-    return await this.createContent(BlogPost, owner);
+    return await this.createContent(BlogPost, username);
 
   }
 
   /**
+   * Creates a new piece of content.
    * 
-   * @param {*} type 
-   * @param {*} owner 
+   * Errors if the client doesn't have permission to assign the owner.
+   * @param {Art | BlogPost | Character} type The type of content to create.
+   * @param {string} [username] The owner of the content. Defaults to the authenticated user.
    * @param {*} options 
    * @returns 
    */
-  async createContent(type, owner = this.getUser(), options) {
+  async createContent(type, username = this.getUser().username, options) {
 
-    const response = await fetch(`${this.endpoints.rest}contents/${type.apiDirectoryName}/${owner.username}`, {
+    const response = await fetch(`${this.endpoints.rest}contents/${type.apiDirectoryName}/${username}`, {
       method: "POST",
       headers: {
         token: this.token
@@ -109,9 +111,9 @@ export default class Client {
    * 
    * Errors if the username is taken or protected, the username and/or password are too short or too long, or account creation at the current IP address has been disabled.
    * @param {Object} data An object that represents the account data.
-   * @param {String} data.username The username of the account.
-   * @param {String} data.password The password of the account.
-   * @param {String} data.email The email address of the account owner.
+   * @param {string} data.username The username of the account.
+   * @param {string} data.password The password of the account.
+   * @param {string} data.email The email address of the account owner.
    * @param {Number} data.birthDate The birth date of the account owner.
    * @returns {User} A User object.
    */
@@ -144,8 +146,8 @@ export default class Client {
    * Requests a new session token from the server. 
    * 
    * Errors if the username-password combination is incorrect.
-   * @param {String} username The username of the user account.
-   * @param {String} password The password of the user account.
+   * @param {string} username The username of the user account.
+   * @param {string} password The password of the user account.
    * @returns {Object} An object containing session information, including the token.
    */
   async createSession(username, password) {
@@ -199,12 +201,12 @@ export default class Client {
    * Gets all art that a user posted.
    * 
    * Returns an empty array if the user hasn't posted anything.
-   * @param {User} [owner] The user to search.
+   * @param {string} [username] The content owner's username. Defaults to the authenticated user's username.
    * @returns {Art[]} An array of art.
    */
-  async getAllArt(owner = this.getUser()) {
+  async getAllArt(username = this.getUser().username) {
 
-    return this.getAllContent(Art, owner);
+    return this.getAllContent(Art, username);
 
   }
 
@@ -212,12 +214,12 @@ export default class Client {
    * Gets all blog posts that a user posted.
    * 
    * Returns an empty array if the user hasn't posted anything.
-   * @param {User} [owner] The user to search.
+   * @param {string} [username] The content owner's username. Defaults to the authenticated user's username.
    * @returns {BlogPost[]} An array of blog posts.
    */
-  async getAllBlogPosts(owner = this.getUser()) {
+  async getAllBlogPosts(username = this.getUser()) {
 
-    return this.getAllContent(BlogPost, owner);
+    return this.getAllContent(BlogPost, username);
 
   }
 
@@ -225,12 +227,12 @@ export default class Client {
    * Gets all characters that a user posted.
    * 
    * Returns an empty array if the user hasn't posted anything.
-   * @param {User} [owner] The user to search.
+   * @param {string} [username] The user to search.
    * @returns {Character[]} An array of characters.
    */
-  async getAllCharacters(owner = this.getUser()) {
+  async getAllCharacters(username = this.getUser().username) {
 
-    return this.getAllContent(Character, owner);
+    return this.getAllContent(Character, username);
 
   }
 
@@ -239,12 +241,12 @@ export default class Client {
    * 
    * Returns an empty array if the user hasn't posted anything.
    * @param {Art | BlogPost | Character} type The class of content to get.
-   * @param {User} [owner] The user to search.
+   * @param {string} [username] The content owner's username. Defaults to the authenticated user's username.
    * @returns {Art[] | BlogPost[] | Character[]} An array of content.
    */
-  async getAllContent(type, owner = this.getUser()) {
+  async getAllContent(type, username = this.getUser().username) {
 
-    const data = this.requestREST(`contents/${type.apiDirectoryName}/${owner.username}`);
+    const data = this.requestREST(`contents/${type.apiDirectoryName}/${username}`);
 
     for (let i = 0; data.length > i; i++) {
 
@@ -260,13 +262,13 @@ export default class Client {
    * Gets a blog post.
    * 
    * Errors if the blog post doesn't exist.
-   * @param {User} [owner] 
-   * @param {String} slug 
+   * @param {string} [username] The content owner's username. Defaults to the authenticated user's username.
+   * @param {string} slug 
    * @returns {BlogPost} The blog post.
    */
-  async getBlogPost(owner = this.getUser(), slug) {
+  async getBlogPost(username = this.getUser().username, slug) {
 
-    return this.getContent(BlogPost, owner, slug);
+    return this.getContent(BlogPost, username, slug);
 
   }
 
@@ -274,27 +276,29 @@ export default class Client {
    * Gets a character.
    * 
    * Errors if the character doesn't exist.
-   * @param {User} [owner] The owner of the character.
-   * @param {String} slug The unique slug of the character.
+   * @param {string} [username] The content owner's username. Defaults to the authenticated user's username.
+   * @param {string} slug The unique slug of the character.
    * @returns {Character} The character.
    */
-  async getCharacter(owner = this.getUser(), slug) {
+  async getCharacter(username = this.getUser().username, slug) {
 
-    return this.getContent(Character, owner, slug);
+    return this.getContent(Character, username, slug);
 
   }
 
   /**
+   * Gets a piece of content.
    * 
-   * @param {Art | BlogPost | Character} type 
-   * @param {User} [owner] 
-   * @param {String} slug 
-   * @returns {Art | BlogPost | Character}
+   * Errors if the content doesn't exist.
+   * @param {Art | BlogPost | Character} type The type of the content.
+   * @param {string} [username] The content owner's username. Defaults to the authenticated user's username.
+   * @param {string} slug The unique slug of the content.
+   * @returns {Art | BlogPost | Character} The content.
    */
-  async getContent(type, owner = this.getUser(), slug) {
+  async getContent(type, username = this.getUser().username, slug) {
 
     // Get the data from the API.
-    const data = await this.requestREST(`contents/${type.apiDirectoryName}/${owner.username}/${slug}`);
+    const data = await this.requestREST(`contents/${type.apiDirectoryName}/${username}/${slug}`);
     
     // Create a BlogPost object from the data.
     return new type(data);
@@ -310,8 +314,8 @@ export default class Client {
    * 
    * Errors if no user is found.
    * @param {Object} [data] An object of the user's username or unique ID.
-   * @param {String} [data.username] The user's username.
-   * @param {String} [data.id] The user's unique ID.
+   * @param {string} [data.username] The user's username.
+   * @param {string} [data.id] The user's unique ID.
    * @returns {User} The desired user. 
    */
   async getUser({username, id} = {}) {
@@ -353,10 +357,14 @@ export default class Client {
 
   /**
    * Sends a request to the Makuwro API.
-   * @param {String} path The API endpoint.
-   * @returns 
+   * @param {string} path The API endpoint.
+   * @param {Object} [options] The options object to pass to the fetch request.
+   * @param {string} [options.method] The method of the fetch request. Defaults to GET.
+   * @param {Object} [options.headers] The headers to pass to the fetch request. Defaults to an empty object.
+   * @param {Object} [options.body] The body to pass to the fetch request.
+   * @returns {any}
    */
-  async requestREST(path, {method = "GET", headers = {}} = {method: "GET", headers: {}}) {
+  async requestREST(path, {method = "GET", headers = {}, body} = {method: "GET", headers: {}}) {
     
     const controller = new AbortController();
     setTimeout(() => controller.abort(), this.timeout);
@@ -366,7 +374,8 @@ export default class Client {
         token: this.token
       } : headers,
       signal: controller.signal,
-      method
+      method,
+      body
     });
     
     const data = await response.json();
