@@ -23,37 +23,37 @@ export default class Account {
 
   async createArt() {
 
-    return this.client.createArt(this);
+    return this.client.createArt(this.username);
 
   }
 
   async createBlogPost() {
 
-    return this.client.createBlogPost(this);
+    return this.client.createBlogPost(this.username);
 
   }
 
   async getAllArt() {
 
-    return this.client.getAllArt(this);
+    return this.client.getAllArt(this.username);
 
   }
 
   async getAllBlogPosts() {
 
-    return this.client.getAllBlogPosts(this);
+    return this.client.getAllBlogPosts(this.username);
 
   }
 
   async getAllCharacters() {
 
-    return this.client.getAllCharacters(this);
+    return this.client.getAllCharacters(this.username);
 
   }
 
   async getBlogPosts() {
 
-    return this.client.getBlogPosts(this);
+    return this.client.getBlogPosts(this.username);
 
   }
 
