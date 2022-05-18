@@ -1,4 +1,4 @@
-import { InvalidTokenError, RequiredVariableError } from "makuwro-errors";
+import { AccountBlockedError, BadCredentialsError, InvalidTokenError, RequiredVariableError, UnknownError } from "makuwro-errors";
 import User from "./User.js";
 import Art from "./Art.js";
 import BlogPost from "./BlogPost.js";
@@ -97,7 +97,7 @@ export default class Client {
 
     if (!response.ok) {
 
-      Client.throwErrorFromCode(data.code, data.message);
+      Client.throwErrorFromObject(data);
 
     }
 
@@ -133,7 +133,7 @@ export default class Client {
 
     if (!response.ok) {
 
-      Client.throwErrorFromCode(data.code, data.message);
+      Client.throwErrorFromObject(data);
 
     }
 
@@ -163,7 +163,7 @@ export default class Client {
 
     if (!response.ok) {
 
-      Client.throwErrorFromCode(data.code, data.message);
+      Client.throwErrorFromObject(data);
 
     }
 
@@ -394,7 +394,7 @@ export default class Client {
 
     if (!response.ok) {
 
-      Client.throwErrorFromCode(data.code, data.message);
+      Client.throwErrorFromObject(data);
 
     }
 
@@ -439,16 +439,21 @@ export default class Client {
    * Searches for an error from a specified code, and then throws it with the error message as a parameter.
    * 
    * If the code is not found, an UnknownError object is thrown instead.
-   * @param {number} code The error code.
-   * @param {string} [message] The error message.
+   * @param {number} object The error object data.
    * @returns {Error} The error. 
    */
-  static throwErrorFromCode(code, message) {
+  static throwErrorFromObject({code, message}) {
 
     switch (code) {
 
       case 0:
-        throw new InvalidTokenError();
+        throw new UnknownError();
+
+      case 10000:
+        throw new BadCredentialsError();
+
+      case 10003:
+        throw new AccountBlockedError();
 
       default:
         throw new Error(message);
