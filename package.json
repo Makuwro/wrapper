@@ -20,5 +20,8 @@
   "homepage": "https://github.com/Makuwro/wrapper#readme",
   "devDependencies": {
     "eslint": "^8.15.0"
+  },
+  "dependencies": {
+    "makuwro-errors": "github:Makuwro/errors"
   }
 }

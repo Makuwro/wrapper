@@ -1,6 +1,4 @@
-import UnauthenticatedError from "./errors/UnauthenticatedError.js";
-import UndefinedVariableError from "./errors/UndefinedVariableError.js";
-import InvalidTokenError from "./errors/InvalidTokenError.js";
+import { InvalidTokenError, RequiredVariableError } from "makuwro-errors";
 import User from "./User.js";
 import Art from "./Art.js";
 import BlogPost from "./BlogPost.js";
@@ -8,15 +6,15 @@ import Character from "./Character.js";
 
 /**
  * Represents a client.
- * @prop {Object} endpoints An object of API endpoints.
- * @prop {Object} endpoints.prod An object of production API endpoints.
+ * @prop {object} endpoints An object of API endpoints.
+ * @prop {object} endpoints.prod An object of production API endpoints.
  * @prop {string} endpoints.prod.rest The production REST API endpoint.
  * @prop {string} endpoints.prod.websocket The production websocket endpoint.
- * @prop {Object} endpoints.dev An object of development API endpoints.
+ * @prop {object} endpoints.dev An object of development API endpoints.
  * @prop {string} endpoints.dev.rest The development REST API endpoint.
  * @prop {string} endpoints.dev.websocket The development websocket endpoint. 
  * @prop {string} [token] The token of the user account.
- * @prop {Integer} timeout The maximum time in milliseconds that a request can take before it times out.
+ * @prop {number} timeout The maximum time in milliseconds that a request can take before it times out.
  * @prop {User} [user] The current, authenticated user.
  */
 export default class Client {
@@ -345,7 +343,7 @@ export default class Client {
 
       } else if (!this.token) {
 
-        throw new UnauthenticatedError();
+        throw new InvalidTokenError();
 
       }
 
@@ -415,11 +413,11 @@ export default class Client {
     // Make sure we got a query.
     if (!query) {
 
-      throw new UndefinedVariableError("query");
+      throw new RequiredVariableError("query");
 
     } else if (!type) {
 
-      throw new UndefinedVariableError("type");
+      throw new RequiredVariableError("type");
 
     }
 

@@ -2,11 +2,11 @@ import Account from "./Account.js";
 
 /**
  * Represents a user.
- * @prop {String} username The user's username.
- * @prop {String} [displayName] The user's display name.
- * @prop {Boolean} isStaff True if the user is a Makuwro staff member.
- * @prop {Boolean} isBanned True if the user is currently banned.
- * @prop {Number} lastOnline The time in milliseconds when the user was last online.
+ * @prop {string} username The user's username.
+ * @prop {string} [displayName] The user's display name.
+ * @prop {boolean} isStaff True if the user is a Makuwro staff member.
+ * @prop {boolean} isBanned True if the user is currently banned.
+ * @prop {number} lastOnline The time in milliseconds when the user was last online.
  */
 export default class User extends Account {
 
