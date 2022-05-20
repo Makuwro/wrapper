@@ -455,6 +455,9 @@ export default class Client {
       case 10003:
         throw new AccountBlockedError();
 
+      case 10013:
+        throw new UsernameFormatError();
+
       default:
         throw new Error(message);
 
