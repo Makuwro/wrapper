@@ -252,9 +252,9 @@ export default class Client {
    * Gets all of a type of content.
    * 
    * Returns an empty array if the user hasn't posted anything.
-   * @param {Art | BlogPost | Character} type The class of content to get.
+   * @param {Art | BlogPost | Character | Story} type The class of content to get.
    * @param {string} [username] The content owner's username. Defaults to the authenticated user's username.
-   * @returns {Art[] | BlogPost[] | Character[]} An array of content.
+   * @returns {Promise<Art[] | BlogPost[] | Character[] | Story[]>} An array of content.
    */
   async getAllContent(type, username = this.getUser().username) {
 
@@ -267,6 +267,12 @@ export default class Client {
     }
 
     return data;
+
+  }
+
+  async getAllStories(username = this.getUser().username) {
+
+    return await this.getAllContent(Story, username);
 
   }
 
@@ -364,6 +370,12 @@ export default class Client {
 
     // Return the user object.
     return user;
+
+  }
+
+  async getStory(username = this.getUser().username, slug) {
+
+    return await this.getContent(Story, username, slug);
 
   }
 
