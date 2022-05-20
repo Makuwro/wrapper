@@ -3,6 +3,7 @@ import User from "./User.js";
 import Art from "./Art.js";
 import BlogPost from "./BlogPost.js";
 import Character from "./Character.js";
+import Story from "./Story.js";
 
 /**
  * Represents a client.
@@ -218,7 +219,7 @@ export default class Client {
    */
   async getAllArt(username = this.getUser().username) {
 
-    return this.getAllContent(Art, username);
+    return await this.getAllContent(Art, username);
 
   }
 
@@ -231,7 +232,7 @@ export default class Client {
    */
   async getAllBlogPosts(username = this.getUser()) {
 
-    return this.getAllContent(BlogPost, username);
+    return await this.getAllContent(BlogPost, username);
 
   }
 
@@ -244,7 +245,7 @@ export default class Client {
    */
   async getAllCharacters(username = this.getUser().username) {
 
-    return this.getAllContent(Character, username);
+    return await this.getAllContent(Character, username);
 
   }
 
@@ -258,7 +259,7 @@ export default class Client {
    */
   async getAllContent(type, username = this.getUser().username) {
 
-    const data = this.requestREST(`contents/${type.apiDirectoryName}/${username}`);
+    const data = await this.requestREST(`contents/${type.apiDirectoryName}/${username}`);
 
     for (let i = 0; data.length > i; i++) {
 
