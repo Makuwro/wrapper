@@ -1,4 +1,4 @@
-import { AccountBlockedError, BadCredentialsError, InvalidTokenError, RequiredVariableError, UnknownError } from "makuwro-errors";
+import { AccountBlockedError, BadCredentialsError, InvalidTokenError, RequiredVariableError, UnknownError, UsernameFormatError } from "makuwro-errors";
 import User from "./User.js";
 import Art from "./Art.js";
 import BlogPost from "./BlogPost.js";
@@ -390,7 +390,7 @@ export default class Client {
       body
     });
     
-    const data = await response.json();
+    const data = !response.ok || method === "GET" && await response.json();
 
     if (!response.ok) {
 
