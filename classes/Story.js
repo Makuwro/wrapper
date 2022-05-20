@@ -8,7 +8,7 @@ import Content from "./Content.js";
  * @prop {String} slug The unique slug of the story.
  * @prop {String} title The title of the story.
  */
-export default class Character extends Content {
+export default class Story extends Content {
 
   static apiDirectoryName = "stories";
 
