@@ -55,7 +55,7 @@ export default class Account {
 
   async getAllNotifications() {
 
-    return this.#client.getAllNotifications(this.);
+    return this.#client.getAllNotifications(this.username);
 
   }
 
