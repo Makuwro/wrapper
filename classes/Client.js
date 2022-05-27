@@ -532,7 +532,7 @@ export default class Client {
     }
 
     // Send a request to the server to update the blog post.
-    await this.requestREST(`contents/blog/${username}/${slug}`, {
+    await this.requestREST(`contents/blogs/${username}/${slug}`, {
       body: formData,
       method: "PATCH"
     });
