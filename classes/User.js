@@ -10,12 +10,14 @@ import Account from "./Account.js";
  */
 export default class User extends Account {
 
+  #client;
+
   constructor(data, client) {
 
     super(data, client);
     this.isStaff = data.isStaff;
     this.lastOnline = data.lastOnline;
-    this.client = client;
+    this.#client = client;
 
   }
 

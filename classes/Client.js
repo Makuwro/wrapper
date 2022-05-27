@@ -57,6 +57,11 @@ export default class Client {
 
   }
 
+  /**
+   * 
+   * @param {*} username 
+   * @returns 
+   */
   async createArt(username = this.getUser().username) {
 
     return await this.createContent(Art, username);
@@ -185,6 +190,10 @@ export default class Client {
 
   }
 
+  /**
+   * 
+   * @param {*} content 
+   */
   async deleteContent(content) {
 
 
@@ -204,6 +213,10 @@ export default class Client {
 
   }
 
+  /**
+   * 
+   * @param {*} content 
+   */
   async editContent(content) {
 
 
@@ -271,6 +284,22 @@ export default class Client {
 
   }
 
+  /**
+   * 
+   * @param {*} username 
+   * @returns 
+   */
+  async getAllNotifications(username = this.getUser().username) {
+
+    return await this.getAllContent(Notification, username);
+
+  }
+
+  /**
+   * 
+   * @param {*} username 
+   * @returns 
+   */
   async getAllStories(username = this.getUser().username) {
 
     return await this.getAllContent(Story, username);
@@ -283,7 +312,7 @@ export default class Client {
    * Errors if the blog post doesn't exist.
    * @param {string} [username] The content owner's username. Defaults to the authenticated user's username.
    * @param {string} slug 
-   * @returns {BlogPost} The blog post.
+   * @returns {Promise<BlogPost>} The blog post.
    */
   async getBlogPost(username = this.getUser().username, slug) {
 
@@ -297,7 +326,7 @@ export default class Client {
    * Errors if the character doesn't exist.
    * @param {string} [username] The content owner's username. Defaults to the authenticated user's username.
    * @param {string} slug The unique slug of the character.
-   * @returns {Character} The character.
+   * @returns {Promise<Character>} The character.
    */
   async getCharacter(username = this.getUser().username, slug) {
 
@@ -312,7 +341,7 @@ export default class Client {
    * @param {Art | BlogPost | Character} type The type of the content.
    * @param {string} [username] The content owner's username. Defaults to the authenticated user's username.
    * @param {string} slug The unique slug of the content.
-   * @returns {Art | BlogPost | Character} The content.
+   * @returns {Promise<Art | BlogPost | Character>} The content.
    */
   async getContent(type, username = this.getUser().username, slug) {
 
@@ -335,7 +364,7 @@ export default class Client {
    * @param {Object} [data] An object of the user's username or unique ID.
    * @param {string} [data.username] The user's username.
    * @param {string} [data.id] The user's unique ID.
-   * @returns {User} The desired user. 
+   * @returns {Promise<User>} The desired user. 
    */
   async getUser({username, id} = {}) {
 
@@ -374,6 +403,12 @@ export default class Client {
 
   }
 
+  /**
+   * 
+   * @param {*} username 
+   * @param {*} slug 
+   * @returns 
+   */
   async getStory(username = this.getUser().username, slug) {
 
     return await this.getContent(Story, username, slug);
@@ -387,7 +422,7 @@ export default class Client {
    * @param {string} [options.method] The method of the fetch request. Defaults to GET.
    * @param {Object} [options.headers] The headers to pass to the fetch request. Defaults to an empty object.
    * @param {Object} [options.body] The body to pass to the fetch request.
-   * @returns {any}
+   * @returns {Promise<any>}
    */
   async requestREST(path, {method = "GET", headers = {}, body} = {method: "GET", headers: {}}) {
     
@@ -419,7 +454,7 @@ export default class Client {
    * Searches the Makuwro database based on a specific query or content type.
    * @param {string} query A keyword.
    * @param {Number} type A content type.
-   * @returns {Art[] | BlogPost[] | Comment[] | Character[] | User[]} An array of content.
+   * @returns {Promise<Art[] | BlogPost[] | Comment[] | Character[] | User[]>} An array of content.
    */
   async search(query, type) {
 
@@ -478,12 +513,18 @@ export default class Client {
 
   }
 
+  /**
+   * 
+   * @param {*} username 
+   * @param {*} slug 
+   * @param {*} details 
+   */
   async updateBlogPost(username = this.getUser().username, slug, details) {
 
     // Create FormData from the details.
     const formData = new FormData();
     const detailsKeys = Object.keys(details);
-    for (let i = 0; detailsKeys.length; i++) {
+    for (let i = 0; detailsKeys.length > i; i++) {
 
       const key = detailsKeys[i];
       formData.append(key, details[key]);

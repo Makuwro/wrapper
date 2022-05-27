@@ -9,13 +9,15 @@ import User from "./User.js";
  */
 export default class Content {
 
+  #client;
+
   constructor(data = {}, client) {
 
     this.id = data.id;
     this.slug = data.slug;
     this.owner = data.owner;
     this.description = data.description;
-    this.client = client;
+    this.#client = client;
 
     // Verify the owner object.
     if (this.owner && !(this.owner instanceof User)) {
@@ -28,13 +30,13 @@ export default class Content {
 
   async delete() {
 
-    return await this.client.deleteContent(this);
+    return await this.#client.deleteContent(this);
 
   }
 
   async edit(options) {
 
-    return await this.client.editContent(this, options);
+    return await this.#client.editContent(this, options);
 
   }
 
