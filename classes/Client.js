@@ -1,4 +1,4 @@
-import { AccountBlockedError, BadCredentialsError, InvalidTokenError, RequiredVariableError, UnknownError, UsernameFormatError } from "makuwro-errors";
+import { AccountBlockedError, AccountConflictError, BadCredentialsError, InvalidTokenError, RequiredVariableError, UnknownError, UsernameFormatError } from "makuwro-errors";
 import User from "./User.js";
 import Art from "./Art.js";
 import BlogPost from "./BlogPost.js";
@@ -503,11 +503,14 @@ export default class Client {
       case 10003:
         throw new AccountBlockedError();
 
+      case 10004:
+        throw new AccountConflictError();
+
       case 10013:
         throw new UsernameFormatError();
 
       default:
-        throw new Error(message);
+        throw new UnknownError();
 
     }
 
