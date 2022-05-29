@@ -1,4 +1,4 @@
-import { AccountBlockedError, AccountConflictError, BadCredentialsError, InvalidTokenError, RequiredVariableError, UnknownError, UsernameFormatError } from "makuwro-errors";
+import { AccountBlockedError, AccountConflictError, BadCredentialsError, InvalidTokenError, RequiredVariableError, UnderageError, UnknownError, UsernameFormatError } from "makuwro-errors";
 import User from "./User.js";
 import Art from "./Art.js";
 import BlogPost from "./BlogPost.js";
@@ -490,7 +490,7 @@ export default class Client {
    * @param {number} object The error object data.
    * @returns {Error} The error. 
    */
-  static throwErrorFromObject({code, message}) {
+  static throwErrorFromObject({code}) {
 
     switch (code) {
 
@@ -505,6 +505,9 @@ export default class Client {
 
       case 10004:
         throw new AccountConflictError();
+
+      case 10012:
+        throw new UnderageError();
 
       case 10013:
         throw new UsernameFormatError();
