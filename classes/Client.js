@@ -229,16 +229,6 @@ export default class Client {
   }
 
   /**
-   * 
-   * @param {*} content 
-   */
-  async editContent(content) {
-
-
-
-  }
-
-  /**
    * Gets all art that a user posted.
    * 
    * Returns an empty array if the user hasn't posted anything.
@@ -571,6 +561,28 @@ export default class Client {
 
   }
 
+  /**
+   * 
+   * @since v1.0.0
+   * @param {Art | BlogPost | Character | Comment} contentType 
+   * @param {string} username 
+   * @param {string} slug 
+   * @param {object} props
+   * @param {string} [props.slug] 
+   */
+  async updateContent(contentType, username, slug, props) {
+
+    // Add all the fields to a FormData object.
+    const formData = new FormData();
+    const keys = Object.keys(props);
+    for (let i = 0; keys.length > i; i++) {
+
+      const key = keys[i];
+      formData.append(key, props[key]);
+
+    }
+
+    await this.requestREST(`contents/${contentType.apiDirectoryName}/${username}/${slug}`, {
       method: "PATCH",
       body: formData
     });
