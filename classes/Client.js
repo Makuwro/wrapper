@@ -547,22 +547,21 @@ export default class Client {
    * @param {string} [props.about]
    * @param {string} [props.displayName]
    */
-  async updateAccount(accountType, username, fields) {
+  async updateAccount(accountType, username, props) {
 
     // Add all the fields to a FormData object.
     const formData = new FormData();
-    const fieldsKeys = Object.keys(fields);
+    const fieldsKeys = Object.keys(props);
     for (let i = 0; fieldsKeys.length > i; i++) {
 
       const key = fieldsKeys[i];
-      formData.append(key, fields[key]);
+      formData.append(key, props[key]);
 
     }
 
-    await this.requestREST(`accounts/${accountType === User ? "user" : "team"}${username === this.getUser().username ? "" : `s/${username}`}`, {
+    await this.requestREST(`accounts/${accountType === User ? "user" : "team"}${username === (await this.getUser()).username ? "" : `s/${username}`}`, {
       method: "PATCH",
-      headers: {"Content-Type": "multipart/form-data"},
-      body: fields
+      body: formData
     });
 
   }
