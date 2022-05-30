@@ -20,17 +20,5 @@ export default class User extends Account {
     this.#client = client;
 
   }
-
-  async update(props) {
-
-    if (props.password && typeof props.password !== "string") {
-
-      // TODO: Verify password
-
-    }
-
-    return await super.update(props, this.client);
-
-  }
   
 }
