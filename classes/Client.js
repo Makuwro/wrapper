@@ -62,7 +62,7 @@ export default class Client {
    * @param {*} username 
    * @returns 
    */
-  async createArt(username = this.getUser().username) {
+  async createArt(username) {
 
     return await this.createContent(Art, username);
 
@@ -90,7 +90,7 @@ export default class Client {
    * @param {*} options 
    * @returns 
    */
-  async createContent(type, username = this.getUser().username, options) {
+  async createContent(type, username, options) {
 
     const response = await fetch(`${this.endpoints.rest}contents/${type.apiDirectoryName}/${username}`, {
       method: "POST",
@@ -421,7 +421,7 @@ export default class Client {
    * @param {*} slug 
    * @returns 
    */
-  async getStory(username = this.getUser().username, slug) {
+  async getStory(username, slug) {
 
     return await this.getContent(Story, username, slug);
 
@@ -565,7 +565,7 @@ export default class Client {
    * @param {string} slug 
    * @param {object} details 
    */
-  async updateBlogPost(username = this.getUser().username, slug, details) {
+  async updateBlogPost(username, slug, details) {
 
     // Create FormData from the details.
     const formData = new FormData();
