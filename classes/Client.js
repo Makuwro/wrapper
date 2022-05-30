@@ -130,7 +130,7 @@ export default class Client {
     form.append("birthDate", birthDate);
     form.append("email", email);
 
-    const response = await fetch(`${this.endpoints.rest}accounts/user`, {
+    const response = await this.requestREST("accounts/user", {
       method: "POST",
       body: form
     });
@@ -157,10 +157,9 @@ export default class Client {
    */
   async createSession(username, password) {
 
-    const response = await fetch(`${this.endpoints.rest}accounts/user/sessions`, {
+    const response = await this.requestREST("accounts/user/sessions", {
       method: "POST",
       headers: {
-        "Content-Type": "multipart/form-data",
         username,
         password
       }
@@ -177,8 +176,15 @@ export default class Client {
 
   }
 
+  async disableAccount(accountType, username) {
+
+    await this.updateAccount(accountType, username, {isDisabled: true});
+
+  }
+
   /**
    * Disconnects from the Makuwro gateway.
+   * @since v1.0.0
    */
   async disconnect() {
 
@@ -521,9 +527,37 @@ export default class Client {
 
   /**
    * 
-   * @param {*} username 
-   * @param {*} slug 
-   * @param {*} details 
+   * @since v1.0.0
+   * @param {User | Team} accountType 
+   * @param {string} username 
+   * @param {object} fields 
+   */
+  async updateAccount(accountType, username, fields) {
+
+    // Add all the fields to a FormData object.
+    const formData = new FormData();
+    const fieldsKeys = Object.keys(fields);
+    for (let i = 0; fieldsKeys.length > i; i++) {
+
+      const key = fieldsKeys[i];
+      formData.append(key, fields[key]);
+
+    }
+
+    await this.requestREST(`accounts/${accountType === User ? "user" : "team"}${username === this.getUser().username ? "" : `s/${username}`}`, {
+      method: "PATCH",
+      headers: {"Content-Type": "multipart/form-data"},
+      body: fields
+    });
+
+  }
+
+  /**
+   * 
+   * @since v1.0.0
+   * @param {string} username 
+   * @param {string} slug 
+   * @param {object} details 
    */
   async updateBlogPost(username = this.getUser().username, slug, details) {
 

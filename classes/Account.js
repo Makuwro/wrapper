@@ -35,6 +35,12 @@ export default class Account {
 
   }
 
+  async disable() {
+
+    await this.#client.disableAccount(this.constructor, this.id);
+
+  }
+
   async getAllArt() {
 
     return this.#client.getAllArt(this.username);
