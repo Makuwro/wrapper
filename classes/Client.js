@@ -178,9 +178,12 @@ export default class Client {
 
   /**
    * 
-   * @param {*} content 
+   * @since v1.0.0
+   * @param {*} contentType 
+   * @param {*} username 
+   * @param {*} slug 
    */
-  async deleteContent(content) {
+  async deleteContent(contentType, username, slug) {
 
 
 
@@ -532,7 +535,9 @@ export default class Client {
   }
 
   /**
+   * Sends a request to the server to update an account.
    * 
+   * Attempting to modify certain undocumented properties, such as `isStaff`, may cause the server to throw an error.
    * @since v1.0.0
    * @param {User | Team} accountType 
    * @param {string} username 

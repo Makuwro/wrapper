@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import Client from "./Client.js";
 import Account from "./Account.js";
 
 /**
@@ -10,6 +12,7 @@ import Account from "./Account.js";
  */
 export default class User extends Account {
 
+  /** @type {Client} */
   #client;
 
   constructor(data, client) {
