@@ -35,7 +35,11 @@ export default class Account {
 
   }
 
-  async disable() {
+  async delete(password) {
+
+    await this.#client.deleteAccount(this.constructor, this.username, password);
+
+  }
 
     await this.#client.disableAccount(this.constructor, this.username);
 
