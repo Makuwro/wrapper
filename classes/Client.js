@@ -205,9 +205,9 @@ export default class Client {
    * @param {User | Team} accountType 
    * @param {string} username 
    */
-  async disableAccount(accountType, username) {
+  async disableAccount(accountType, username, password) {
 
-    await this.updateAccount(accountType, username, {isDisabled: true});
+    await this.updateAccount(accountType, username, {isDisabled: true, password});
 
   }
 
