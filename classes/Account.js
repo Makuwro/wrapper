@@ -37,7 +37,7 @@ export default class Account {
 
   async disable() {
 
-    await this.#client.disableAccount(this.constructor, this.id);
+    await this.#client.disableAccount(this.constructor, this.username);
 
   }
 
