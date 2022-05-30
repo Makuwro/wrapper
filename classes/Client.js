@@ -164,15 +164,29 @@ export default class Client {
         password
       }
     });
-    const data = await response.json();
 
-    if (!response.ok) {
+  }
 
-      Client.throwErrorFromObject(data);
+  /**
+   * 
+   * @param {*} content 
+   */
+  async deleteContent(content) {
 
-    }
 
-    return data;
+
+  }
+
+  /**
+   * Sends a request to revoke a session token.
+   * @param {string} token The session token to revoke. Defaults to the current session token.
+   */
+  async deleteSessionToken(token = this.token) {
+
+    await this.requestREST("accounts/user/sessions", {
+      method: "DELETE",
+      headers: {token}
+    });
 
   }
 
@@ -199,29 +213,6 @@ export default class Client {
       this.ws.close();
 
     }
-
-  }
-
-  /**
-   * 
-   * @param {*} content 
-   */
-  async deleteContent(content) {
-
-
-
-  }
-
-  /**
-   * Sends a request to revoke a session token.
-   * @param {string} token The session token to revoke. Defaults to the current session token.
-   */
-  async deleteSessionToken(token = this.token) {
-
-    await this.requestREST("accounts/user/sessions", {
-      method: "DELETE",
-      headers: {token}
-    });
 
   }
 
