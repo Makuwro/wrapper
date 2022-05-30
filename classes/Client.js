@@ -166,6 +166,12 @@ export default class Client {
     }, true);
 
   }
+
+  async deleteAccount(accountType, username, password) {
+
+    await this.requestREST(`accounts/${accountType === User ? "user" : "team"}${username === (await this.getUser()).username ? "" : `s/${username}`}`, {
+      method: "DELETE",
+      headers: {password}
     });
 
   }
