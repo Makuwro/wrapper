@@ -157,12 +157,15 @@ export default class Client {
    */
   async createSession(username, password) {
 
-    const response = await this.requestREST("accounts/user/sessions", {
+    return await this.requestREST("accounts/user/sessions", {
       method: "POST",
       headers: {
         username,
         password
       }
+    }, true);
+
+  }
     });
 
   }
