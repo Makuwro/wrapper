@@ -436,7 +436,7 @@ export default class Client {
    * @param {Object} [options.body] The body to pass to the fetch request.
    * @returns {Promise<any>}
    */
-  async requestREST(path, {method = "GET", headers = {}, body} = {method: "GET", headers: {}}) {
+  async requestREST(path, {method = "GET", headers = {}, body} = {method: "GET", headers: {}}, getJsonAnyway) {
     
     const controller = new AbortController();
     setTimeout(() => controller.abort(), this.timeout);
@@ -450,7 +450,7 @@ export default class Client {
       body
     });
     
-    const data = !response.ok || method === "GET" && await response.json();
+    const data = !response.ok || (method === "GET" || getJsonAnyway) && await response.json();
 
     if (!response.ok) {
 
