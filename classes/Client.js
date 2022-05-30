@@ -351,11 +351,11 @@ export default class Client {
    * 
    * Errors if the content doesn't exist.
    * @param {Art | BlogPost | Character} type The type of the content.
-   * @param {string} [username] The content owner's username. Defaults to the authenticated user's username.
+   * @param {string} username The content owner's username. 
    * @param {string} slug The unique slug of the content.
    * @returns {Promise<Art | BlogPost | Character>} The content.
    */
-  async getContent(type, username = this.getUser().username, slug) {
+  async getContent(type, username, slug) {
 
     // Get the data from the API.
     const data = await this.requestREST(`contents/${type.apiDirectoryName}/${username}/${slug}`);
