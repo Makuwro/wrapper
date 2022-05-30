@@ -536,7 +536,16 @@ export default class Client {
    * @since v1.0.0
    * @param {User | Team} accountType 
    * @param {string} username 
-   * @param {object} fields 
+   * @param {object} props
+   * @param {boolean} [props.isDisabled]
+   * @param {string} [props.username]
+   * @param {string} [props.email]
+   * @param {number} [props.birthDate]
+   * @param {string} [props.password]
+   * @param {string} [props.terms]
+   * @param {string} [props.css]
+   * @param {string} [props.about]
+   * @param {string} [props.displayName]
    */
   async updateAccount(accountType, username, fields) {
 
