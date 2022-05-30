@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import Client from "./Client.js";
 import User from "./User.js";
 
 /**
@@ -9,6 +11,7 @@ import User from "./User.js";
  */
 export default class Content {
 
+  /** @type {Client} */
   #client;
 
   constructor(data = {}, client) {
@@ -30,13 +33,13 @@ export default class Content {
 
   async delete() {
 
-    return await this.#client.deleteContent(this);
+    return await this.#client.deleteContent(this.constructor, this.owner.username, this.slug);
 
   }
 
-  async edit(options) {
+  async update(props) {
 
-    return await this.#client.editContent(this, options);
+    return await this.#client.updateContent(this.constructor, this.owner.username, this.slug, props);
 
   }
 

@@ -12,6 +12,8 @@ import Account from "./Account.js";
  */
 export default class User extends Account {
 
+  static apiDirectoryName = "users";
+
   /** @type {Client} */
   #client;
 

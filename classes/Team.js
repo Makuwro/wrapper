@@ -7,6 +7,8 @@ import Account from "./Account.js";
  */
 export default class Team extends Account {
 
+  static apiDirectoryName = "teams";
+
   constructor(data, client) {
 
     super(data, client);

@@ -564,7 +564,13 @@ export default class Client {
 
     }
 
-    await this.requestREST(`accounts/${accountType === User ? "user" : "team"}${username === (await this.getUser()).username ? "" : `s/${username}`}`, {
+    await this.requestREST(`accounts/${accountType.apiDirectoryName}${username === (await this.getUser()).username ? "" : `s/${username}`}`, {
+      method: "PATCH",
+      body: formData
+    });
+
+  }
+
       method: "PATCH",
       body: formData
     });
