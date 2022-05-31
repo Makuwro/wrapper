@@ -626,7 +626,7 @@ export default class Client {
   async uploadImageToLiterature(literatureType, literatureOwnerUsername, literatureSlug, file) {
 
     // Try our best to verify that the file is an image.
-    const checkImage = new Promise((resolve, reject) => {
+    const checkImage = () => new Promise((resolve, reject) => {
 
       const image = new Image();
       image.onload = () => {
