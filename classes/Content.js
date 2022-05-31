@@ -1,5 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-import Client from "./Client.js";
 import User from "./User.js";
 
 /**
@@ -11,6 +9,7 @@ import User from "./User.js";
  */
 export default class Content {
 
+  /** @typedef {import("./Client").default} Client */
   /** @type {Client} */
   #client;
 

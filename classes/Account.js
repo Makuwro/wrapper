@@ -1,12 +1,10 @@
-// eslint-disable-next-line no-unused-vars
-import Client from "./Client.js";
-
 /**
  * @prop {string} id Represents the account ID
  * @prop {string} username Represents the account unique name
  */
 export default class Account {
 
+  /** @typedef {import("./Client").default} Client */
   /** @type {Client} */
   #client;
 
