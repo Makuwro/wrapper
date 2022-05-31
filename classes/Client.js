@@ -349,8 +349,8 @@ export default class Client {
     // Get the data from the API.
     const data = await this.requestREST(`contents/${type.apiDirectoryName}/${username}/${slug}`);
     
-    // Create a BlogPost object from the data.
-    return new type(data);
+    // Use a constructor to create an object from the data.
+    return new type({...data, client: this});
 
   }
 
