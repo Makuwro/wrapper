@@ -39,7 +39,7 @@ export default class BlogPost extends Content {
    */
   async uploadImage(image) {
 
-    return await this.#client.uploadImageToLiterature(this.constructor, this.id, image);
+    return await this.#client.uploadImageToLiterature(this.constructor, this.owner.username, this.slug, image);
 
   }
 
