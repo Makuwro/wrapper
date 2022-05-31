@@ -13,7 +13,7 @@ export default class Content {
   /** @type {Client} */
   #client;
 
-  constructor(data = {}, client) {
+  constructor(data, client) {
 
     this.id = data.id;
     this.slug = data.slug;

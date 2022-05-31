@@ -350,7 +350,7 @@ export default class Client {
     const data = await this.requestREST(`contents/${type.apiDirectoryName}/${username}/${slug}`);
     
     // Use a constructor to create an object from the data.
-    return new type({...data, client: this});
+    return new type(data, this);
 
   }
 
