@@ -1,5 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-import Client from "./Client.js";
 import Account from "./Account.js";
 
 /**
@@ -12,17 +10,13 @@ import Account from "./Account.js";
  */
 export default class User extends Account {
 
-  static apiDirectoryName = "users";
-
-  /** @type {Client} */
-  #client;
+  static apiDirectoryName = "user";
 
   constructor(data, client) {
 
     super(data, client);
     this.isStaff = data.isStaff;
     this.lastOnline = data.lastOnline;
-    this.#client = client;
 
   }
   

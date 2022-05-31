@@ -1,14 +1,17 @@
+// eslint-disable-next-line no-unused-vars
+import Client from "./Client.js";
+
 /**
  * @prop {string} id Represents the account ID
  * @prop {string} username Represents the account unique name
  */
 export default class Account {
 
+  /** @type {Client} */
   #client;
 
   constructor(data, client) {
 
-    // Save the account data.
     this.username = data.username;
     this.displayName = data.displayName;
     this.id = data.id;
@@ -17,8 +20,6 @@ export default class Account {
     this.css = data.css;
     this.terms = data.terms;
     this.isBanned = data.isBanned;
-
-    // Save the client.
     this.#client = client;
 
   }

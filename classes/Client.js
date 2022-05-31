@@ -86,26 +86,15 @@ export default class Client {
    * 
    * Errors if the client doesn't have permission to assign the owner.
    * @param {Art | BlogPost | Character} type The type of content to create.
-   * @param {string} [username] The owner of the content. Defaults to the authenticated user.
+   * @param {string} username The owner of the content. 
    * @param {*} options 
    * @returns 
    */
-  async createContent(type, username, options) {
+  async createContent(type, username, slug, options) {
 
-    const response = await fetch(`${this.endpoints.rest}contents/${type.apiDirectoryName}/${username}`, {
-      method: "POST",
-      headers: {
-        token: this.token
-      }
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-
-      Client.throwErrorFromObject(data);
-
-    }
+    const data = await this.requestREST(`contents/${type.apiDirectoryName}/${username}${slug ? `/${slug}` : ""}`, {
+      method: "POST"
+    }, true);
 
     return new type(data, this.client);
 
@@ -167,9 +156,16 @@ export default class Client {
 
   }
 
+  /**
+   * 
+   * @since v1.0.0
+   * @param {User | Team} accountType 
+   * @param {string} username 
+   * @param {string} password 
+   */
   async deleteAccount(accountType, username, password) {
 
-    await this.requestREST(`accounts/${accountType === User ? "user" : "team"}${username === (await this.getUser()).username ? "" : `s/${username}`}`, {
+    await this.requestREST(`accounts/${accountType.apiDirectoryName}${username === (await this.getUser()).username ? "" : `s/${username}`}`, {
       method: "DELETE",
       headers: {password}
     });
@@ -191,7 +187,7 @@ export default class Client {
 
   /**
    * Sends a request to revoke a session token.
-   * @param {string} token The session token to revoke. Defaults to the current session token.
+   * @param {string} [token] The session token to revoke. Defaults to the current session token.
    */
   async deleteSessionToken(token = this.token) {
 
