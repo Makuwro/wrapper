@@ -16,11 +16,30 @@ export default class BlogPost extends Content {
 
   static apiDirectoryName = "blogs";
 
+  /** @typedef {import("./Client").default} Client */
+  /** @type {Client} */
+  #client;
+
   constructor(data, client) {
 
     super(data, client);
     this.content = data.content;
     this.title = data.title;
+    this.#client = client;
+
+  }
+
+  /**
+   * Uploads an image to the Makuwro CDN.
+   * 
+   * Errors if the file is not an image, or if it fails the server's checks.
+   * @since v1.0.0
+   * @param {File} image The image file.
+   * @returns {Promise<string>} The path directing to the image.
+   */
+  async uploadImage(image) {
+
+    return await this.#client.uploadImageToLiterature(this.constructor, this.id, image);
 
   }
 

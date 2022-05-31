@@ -1,4 +1,4 @@
-import { AccountBlockedError, AccountConflictError, BadCredentialsError, InvalidTokenError, RequiredVariableError, UnderageError, UnknownError, UsernameFormatError } from "makuwro-errors";
+import { AccountBlockedError, AccountConflictError, BadCredentialsError, InvalidTokenError, RequiredVariableError, UnallowedFileTypeError, UnderageError, UnknownError, UsernameFormatError } from "makuwro-errors";
 import User from "./User.js";
 import Art from "./Art.js";
 import BlogPost from "./BlogPost.js";
@@ -609,6 +609,57 @@ export default class Client {
       body: formData,
       method: "PATCH"
     });
+
+  }
+
+  /**
+   * Uploads an image to the Makuwro CDN.
+   * 
+   * Errors if the file is not an image, or if it fails the server's checks.
+   * @since v1.0.0
+   * @param {BlogPost} literatureType The literature class.
+   * @param {string} literatureOwnerUsername The username of the literature's owner.
+   * @param {string} literatureSlug The literature slug.
+   * @param {File} file The image file.
+   * @returns {Promise<string>} The path directing to the image.
+   */
+  async uploadImageToLiterature(literatureType, literatureOwnerUsername, literatureSlug, file) {
+
+    // Try our best to verify that the file is an image.
+    const checkImage = new Promise((resolve, reject) => {
+
+      const image = new Image();
+      image.onload = () => {
+
+        // Revoke the URL to save memory.
+        URL.revokeObjectURL(image.src);
+
+        // It looks good, so let's send it to the server.
+        resolve();
+
+      };
+      image.onerror = () => {
+
+        // Revoke the URL to save memory.
+        URL.revokeObjectURL(image.src);
+        
+        // The server will likely reject it anyway, so let's save that API call.
+        reject(new UnallowedFileTypeError());
+
+      };
+      image.src = URL.createObjectURL(file);
+ 
+    });
+
+    // This should error if the file isn't an image.
+    await checkImage();
+
+    // Send the request to the server.
+    // If all goes well, this should return the image path.
+    return await this.requestREST(`contents/${literatureType.apiDirectoryName}/${literatureOwnerUsername}/${literatureSlug}/images`, {
+      method: "POST",
+      body: file
+    }, true);
 
   }
 
