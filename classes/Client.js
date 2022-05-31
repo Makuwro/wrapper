@@ -1,4 +1,4 @@
-import { AccountBlockedError, AccountConflictError, BadCredentialsError, InvalidTokenError, RequiredVariableError, UnallowedFileTypeError, UnderageError, UnknownError, UsernameFormatError } from "makuwro-errors";
+import { AccountBlockedError, AccountConflictError, BadCredentialsError, InvalidTokenError, UnallowedFileTypeError, UnderageError, UnknownError, UsernameFormatError } from "makuwro-errors";
 import User from "./User.js";
 import Art from "./Art.js";
 import BlogPost from "./BlogPost.js";
@@ -86,11 +86,10 @@ export default class Client {
    * 
    * Errors if the client doesn't have permission to assign the owner.
    * @param {Art | BlogPost | Character} type The type of content to create.
-   * @param {string} username The owner of the content. 
-   * @param {*} options 
+   * @param {string} username The owner of the content.
    * @returns 
    */
-  async createContent(type, username, slug, options) {
+  async createContent(type, username, slug) {
 
     const data = await this.requestREST(`contents/${type.apiDirectoryName}/${username}${slug ? `/${slug}` : ""}`, {
       method: "POST"
@@ -169,19 +168,6 @@ export default class Client {
       method: "DELETE",
       headers: {password}
     });
-
-  }
-
-  /**
-   * 
-   * @since v1.0.0
-   * @param {*} contentType 
-   * @param {*} username 
-   * @param {*} slug 
-   */
-  async deleteContent(contentType, username, slug) {
-
-
 
   }
 
@@ -448,39 +434,6 @@ export default class Client {
     }
 
     return data;
-
-  }
-
-  /**
-   * Searches the Makuwro database based on a specific query or content type.
-   * @param {string} query A keyword.
-   * @param {Number} type A content type.
-   * @returns {Promise<Art[] | BlogPost[] | Comment[] | Character[] | User[]>} An array of content.
-   */
-  async search(query, type) {
-
-    // Make sure we got a query.
-    if (!query) {
-
-      throw new RequiredVariableError("query");
-
-    } else if (!type) {
-
-      throw new RequiredVariableError("type");
-
-    }
-
-    // Wrap this around a try-catch just in case fetch() throws an error.
-    try {
-
-      // Now ask the server for some search results.
-      const searchResults = await this.requestREST(`search?query=${query}`);
-
-    } catch (err) {
-
-
-
-    }
 
   }
 
