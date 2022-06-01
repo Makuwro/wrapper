@@ -607,11 +607,15 @@ export default class Client {
     // This should error if the file isn't an image.
     await checkImage();
 
+    // Create form data as the body.
+    const body = new FormData();
+    body.append("image", file);
+
     // Send the request to the server.
     // If all goes well, this should return the image path.
     return await this.requestREST(`contents/${literatureType.apiDirectoryName}/${literatureOwnerUsername}/${literatureSlug}/images`, {
       method: "POST",
-      body: file
+      body 
     }, true);
 
   }
