@@ -30,9 +30,15 @@ export default class Content {
 
   }
 
+  /**
+   * Requests the server to delete a piece of content.
+   * 
+   * The authenticated user must have access to the specified content; otherwise, this method will fail.
+   * @since v1.0.0
+   */
   async delete() {
 
-    return await this.#client.deleteContent(this.constructor, this.owner.username, this.slug);
+    await this.#client.deleteContent(this.constructor, this.owner.username, this.slug);
 
   }
 

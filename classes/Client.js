@@ -172,6 +172,23 @@ export default class Client {
   }
 
   /**
+   * Requests the server to delete a piece of content.
+   * 
+   * The authenticated user must have access to the specified content; otherwise, this method will fail.
+   * @since v1.0.0
+   * @param {Art | BlogPost | Character | Comment | Story} contentType 
+   * @param {string} username 
+   * @param {string} slug 
+   */
+  async deleteContent(contentType, username, slug) {
+
+    await this.requestREST(`contents/${contentType.apiDirectoryName}/${username}/${slug}`, {
+      method: "DELETE"
+    });
+
+  }
+
+  /**
    * Sends a request to revoke a session token.
    * @param {string} [token] The session token to revoke. Defaults to the current session token.
    */
