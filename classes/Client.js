@@ -442,7 +442,7 @@ export default class Client {
       body
     });
     
-    const data = !response.ok || (method === "GET" || getJsonAnyway) && await response.json();
+    const data = (method === "GET" || getJsonAnyway) && await response.json();
 
     if (!response.ok) {
 
