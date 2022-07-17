@@ -15,6 +15,7 @@ export default class Art extends Content {
   constructor(data, client) {
 
     super(data, client);
+    this.imagePath = data.imagePath;
 
   }
 
