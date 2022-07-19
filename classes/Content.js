@@ -51,4 +51,10 @@ export default class Content {
 
   }
 
+  async getAllComments() {
+
+    return await this.#client.getAllComments(this.constructor, this.owner.username, this.slug);
+
+  }
+
 }

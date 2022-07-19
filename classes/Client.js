@@ -4,6 +4,7 @@ import Art from "./Art.js";
 import BlogPost from "./BlogPost.js";
 import Character from "./Character.js";
 import Story from "./Story.js";
+import Comment from "./Comment.js";
 
 /**
  * Represents a client.
@@ -263,6 +264,28 @@ export default class Client {
   async getAllCharacters(username = this.getUser().username) {
 
     return await this.getAllContent(Character, username);
+
+  }
+
+  /**
+   * 
+   * @since v1.0.0
+   * @param {Art | BlogPost | Character | Story} type 
+   * @param {string} username 
+   * @param {string} slug 
+   * @returns {Promise<Comment[]>}
+   */
+  async getAllComments(type, username, slug) {
+
+    const comments = await this.requestREST(`contents/${type.apiDirectoryName}/${username}/${slug}/comments`);
+
+    for (let i = 0; comments.length > i; i++) {
+
+      comments[i] = new Comment(comments[i]);
+
+    }
+
+    return comments;
 
   }
 
