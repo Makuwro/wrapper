@@ -311,6 +311,19 @@ export default class Client {
   }
 
   /**
+   * 
+   * @since v1.0.0
+   * @param {*} username 
+   * @param {*} slug 
+   * @returns {Promise<Art>}
+   */
+  async getArt(username = this.getUser().username, slug) {
+
+    return await this.getContent(Art, username, slug);
+
+  }
+
+  /**
    * Gets a blog post.
    * 
    * Errors if the blog post doesn't exist.
