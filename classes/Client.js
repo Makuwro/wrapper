@@ -26,8 +26,8 @@ export default class Client {
       websocket: "ws://api.makuwro.com"
     },
     dev: {
-      rest: "http://192.168.0.9:3001/",
-      websocket: "ws://192.168.0.9:3001"  
+      rest: "http://127.0.0.l:3001/",
+      websocket: "ws://127.0.0.1:3001"  
     }
   };
   timeout = 15000;
