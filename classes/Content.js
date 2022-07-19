@@ -19,6 +19,9 @@ export default class Content {
     this.slug = data.slug;
     this.owner = data.owner;
     this.description = data.description;
+    this.contentWarning = data.contentWarning;
+    this.ageRestrictionLevel = data.ageRestrictionLevel;
+    this.uploadedOn = data.uploadedOn;
     this.#client = client;
 
     // Verify the owner object.
