@@ -4,6 +4,7 @@ import Art from "./Art.js";
 import BlogPost from "./BlogPost.js";
 import Character from "./Character.js";
 import Story from "./Story.js";
+import os from "os";
 
 /**
  * Represents a client.
@@ -24,10 +25,6 @@ export default class Client {
     prod: {
       rest: "https://api.makuwro.com/",
       websocket: "ws://api.makuwro.com"
-    },
-    dev: {
-      rest: "http://192.168.0.9:3001/",
-      websocket: "ws://192.168.0.9:3001"
     }
   };
   timeout = 15000;
@@ -35,7 +32,23 @@ export default class Client {
   constructor(token, mode = "dev") {
 
     this.token = token;
-    this.endpoints = Client.endpoints[mode];
+
+    if (mode === "dev") {
+
+      // Get the client IPv4 address; the local server is hosted there.
+      const ipv4 = os.networkInterfaces()["Wi-Fi"][1].address;
+
+      // Save the endpoints.
+      this.endpoints = {
+        rest: `http://${ipv4}/`,
+        websocket: `ws://${ipv4}`
+      };
+
+    } else {
+
+      this.endpoints = Client.endpoints[mode];
+
+    }
 
   }
 
