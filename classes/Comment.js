@@ -8,6 +8,8 @@ import Content from "./Content.js";
  */
 export default class Comment extends Content {
 
+  static apiDirectoryName = "comments";
+
   #client;
 
   constructor(data, client) {
