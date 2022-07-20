@@ -33,6 +33,12 @@ export default class Content {
 
   }
 
+  async createComment() {
+
+    await this.#client.createComment(this.constructor, this.owner.username, this.slug);
+
+  }
+
   /**
    * Requests the server to delete a piece of content.
    * 

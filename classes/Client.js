@@ -83,6 +83,25 @@ export default class Client {
   }
 
   /**
+   * Creates a new comment.
+   * 
+   * Errors if the client doesn't have permission to leave comments, or if the parent doesn't exist.
+   * @param {Art | BlogPost | Character | Comment | Story} parentContentType 
+   * @param {string} parentUsername 
+   * @param {string} parentSlug
+   * @returns {Promise<Comment>}
+   */
+  async createComment(parentContentType, parentUsername, parentSlug) {
+
+    const data = await this.requestREST(`contents/${parentContentType.apiDirectoryName}/${parentUsername}${parentSlug}`, {
+      method: "POST"
+    }, true);
+
+    return new Comment(data, this);
+
+  }
+
+  /**
    * Creates a new piece of content.
    * 
    * Errors if the client doesn't have permission to assign the owner.
@@ -96,7 +115,7 @@ export default class Client {
       method: "POST"
     }, true);
 
-    return new type(data, this.client);
+    return new type(data, this);
 
   }
   
