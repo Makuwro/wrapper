@@ -10,6 +10,8 @@ export default class Comment extends Content {
 
   static apiDirectoryName = "comments";
 
+  /** @typedef {import("./Client").default} Client */
+  /** @type {Client} */
   #client;
 
   constructor(data, client) {
@@ -21,6 +23,10 @@ export default class Comment extends Content {
 
   }
 
+  /**
+   * Requests the server to delete a comment.
+   * @since v1.0.0
+   */
   async delete() {
 
     await this.#client.deleteComment(this.id);
