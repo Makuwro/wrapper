@@ -89,12 +89,19 @@ export default class Client {
    * @param {Art | BlogPost | Character | Comment | Story} parentContentType 
    * @param {string} parentUsername 
    * @param {string} parentSlug
+   * @param {object} content
+   * @param {string} [content.text]
    * @returns {Promise<Comment>}
    */
-  async createComment(parentContentType, parentUsername, parentSlug) {
+  async createComment(parentContentType, parentUsername, parentSlug, content) {
+
+    // Create the FormData.
+    const body = new FormData();
+    body.append("text", content.text);
 
     const data = await this.requestREST(`contents/${parentContentType.apiDirectoryName}/${parentUsername}${parentSlug}/comments`, {
-      method: "POST"
+      method: "POST",
+      body
     }, true);
 
     return new Comment(data, this);

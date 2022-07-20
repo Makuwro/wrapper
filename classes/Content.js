@@ -33,9 +33,9 @@ export default class Content {
 
   }
 
-  async createComment() {
+  async createComment(content) {
 
-    await this.#client.createComment(this.constructor, this.owner.username, this.slug);
+    await this.#client.createComment(this.constructor, this.owner.username, this.slug, content);
 
   }
 
