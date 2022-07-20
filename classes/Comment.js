@@ -11,6 +11,8 @@ export default class Comment extends Content {
   constructor(data, client) {
 
     super(data, client);
+    this.content = data.content;
+    this.parent = data.parent;
 
   }
   
