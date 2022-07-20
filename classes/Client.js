@@ -199,6 +199,17 @@ export default class Client {
   }
 
   /**
+   * Requests the server to delete a comment.
+   * @since v1.0.0
+   * @param {string} commentId 
+   */
+  async deleteComment(commentId) {
+
+    await this.deleteContent(Comment, null, commentId);
+
+  }
+
+  /**
    * Requests the server to delete a piece of content.
    * 
    * The authenticated user must have access to the specified content; otherwise, this method will fail.
