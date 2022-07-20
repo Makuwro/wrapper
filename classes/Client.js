@@ -99,7 +99,7 @@ export default class Client {
     const body = new FormData();
     body.append("text", content.text);
 
-    const data = await this.requestREST(`contents/${parentContentType.apiDirectoryName}/${parentUsername}${parentSlug}/comments`, {
+    const data = await this.requestREST(`contents/${parentContentType.apiDirectoryName}/${parentUsername}/${parentSlug}/comments`, {
       method: "POST",
       body
     }, true);
