@@ -32,5 +32,18 @@ export default class Comment extends Content {
     await this.#client.deleteComment(this.id);
 
   }
+
+  /**
+   * Requests the server to update a comment.
+   * @since v1.0.0
+   * @param {object} props
+   * @param {object} [content]
+   * @param {string} [content.text]
+   */
+  async update(props) {
+
+    await this.#client.updateComment(this.id, props);
+
+  }
   
 }

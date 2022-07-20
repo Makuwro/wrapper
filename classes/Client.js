@@ -610,10 +610,22 @@ export default class Client {
   }
 
   /**
+   * Requests the server to update a comment.
+   * @since v1.0.0
+   * @param {*} commentId 
+   * @param {*} props 
+   */
+  async updateComment(commentId, props) {
+
+    await this.updateContent(Comment, null, commentId, props);
+
+  }
+
+  /**
    * 
    * @since v1.0.0
    * @param {Art | BlogPost | Character | Comment} contentType 
-   * @param {string} username 
+   * @param {string} [username] 
    * @param {string} slug 
    * @param {object} props
    * @param {string} [props.slug] 
@@ -630,7 +642,7 @@ export default class Client {
 
     }
 
-    await this.requestREST(`contents/${contentType.apiDirectoryName}/${username}/${slug}`, {
+    await this.requestREST(`contents/${contentType.apiDirectoryName}${username ? `/${username}` : ""}/${slug}`, {
       method: "PATCH",
       body: formData
     });
