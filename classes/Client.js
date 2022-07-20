@@ -204,12 +204,12 @@ export default class Client {
    * The authenticated user must have access to the specified content; otherwise, this method will fail.
    * @since v1.0.0
    * @param {Art | BlogPost | Character | Comment | Story} contentType 
-   * @param {string} username 
+   * @param {string} [username] 
    * @param {string} slug 
    */
   async deleteContent(contentType, username, slug) {
 
-    await this.requestREST(`contents/${contentType.apiDirectoryName}/${username}/${slug}`, {
+    await this.requestREST(`contents/${contentType.apiDirectoryName}${username ? `/${username}` : ""}/${slug}`, {
       method: "DELETE"
     });
 

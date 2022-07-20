@@ -23,7 +23,7 @@ export default class Comment extends Content {
 
   async delete() {
 
-    await this.#client.deleteContent(this.constructor, this.owner.username, this.id);
+    await this.#client.deleteContent(this.constructor, null, this.id);
 
   }
   
