@@ -10,6 +10,7 @@ import User from "./User.js";
 export default class Content {
 
   /** @typedef {import("./Client").default} Client */
+  /** @typedef {import("./Comment").default} Comment */
   /** @type {Client} */
   #client;
 
@@ -33,9 +34,14 @@ export default class Content {
 
   }
 
+  /**
+   * 
+   * @param {string} content 
+   * @returns {Promise<Comment>}
+   */
   async createComment(content) {
 
-    await this.#client.createComment(this.constructor, this.owner.username, this.slug, content);
+    return await this.#client.createComment(this.constructor, this.owner.username, this.slug, content);
 
   }
 
