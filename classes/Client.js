@@ -93,7 +93,7 @@ export default class Client {
    */
   async createComment(parentContentType, parentUsername, parentSlug) {
 
-    const data = await this.requestREST(`contents/${parentContentType.apiDirectoryName}/${parentUsername}${parentSlug}`, {
+    const data = await this.requestREST(`contents/${parentContentType.apiDirectoryName}/${parentUsername}${parentSlug}/comments`, {
       method: "POST"
     }, true);
 
