@@ -307,7 +307,7 @@ export default class Client {
 
     for (let i = 0; comments.length > i; i++) {
 
-      comments[i] = new Comment(comments[i]);
+      comments[i] = new Comment(comments[i], this);
 
     }
 
