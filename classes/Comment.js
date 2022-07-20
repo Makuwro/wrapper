@@ -8,11 +8,20 @@ import Content from "./Content.js";
  */
 export default class Comment extends Content {
 
+  #client;
+
   constructor(data, client) {
 
     super(data, client);
     this.content = data.content;
     this.parent = data.parent;
+    this.#client = client;
+
+  }
+
+  async delete() {
+
+    await this.#client.deleteContent(this.constructor, this.owner.username, this.id);
 
   }
   
