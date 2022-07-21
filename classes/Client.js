@@ -117,11 +117,14 @@ export default class Client {
    * Creates a new piece of content.
    * 
    * Errors if the client doesn't have permission to assign the owner.
-   * @param {Art | BlogPost | Character} type The type of content to create.
-   * @param {string} username The owner of the content.
-   * @returns 
+   * @param {Art | BlogPost | Character | Comment | Story} type The type of content to create.
+   * @param {string} username The username of the content's owner.
+   * @param {string} slug The content slug.
+   * @param {object} [props] The content properties.
+   * @param {boolean} [isThread] Is this a new comment thread?
+   * @returns {Promise<Art | BlogPost | Character | Comment | Story>}
    */
-  async createContent(type, username, slug, props, isComment) {
+  async createContent(type, username, slug, props, isThread) {
 
     if (props) {
 
@@ -140,12 +143,12 @@ export default class Client {
 
     }
 
-    const data = await this.requestREST(`contents/${type.apiDirectoryName}${username ? `/${username}` : ""}${slug ? `/${slug}` : ""}${isComment && type !== Comment ? "/comments" : ""}`, {
+    const data = await this.requestREST(`contents/${type.apiDirectoryName}${username ? `/${username}` : ""}${slug ? `/${slug}` : ""}${isThread && type !== Comment ? "/comments" : ""}`, {
       method: "POST",
       ...(props ? {body: props} : {})
     }, true);
 
-    return new (isComment ? Comment : type)(data, this);
+    return new (isThread ? Comment : type)(data, this);
 
   }
   
@@ -202,6 +205,20 @@ export default class Client {
         password
       }
     }, true);
+
+  }
+
+  /**
+   * Requests the server to create a story.
+   * @since v1.0.0
+   * @param {string} username 
+   * @param {string} slug 
+   * @param {object} props 
+   * @returns {Promise<Story>}
+   */
+  async createStory(username = this.getUser()?.username, slug, props) {
+
+    return await this.createContent(Story, username, slug, props);
 
   }
 
@@ -306,7 +323,7 @@ export default class Client {
    * 
    * Returns an empty array if the user hasn't posted anything.
    * @param {string} [username] The content owner's username. Defaults to the authenticated user's username.
-   * @returns {BlogPost[]} An array of blog posts.
+   * @returns {Promise<BlogPost[]>} An array of blog posts.
    */
   async getAllBlogPosts(username = this.getUser()) {
 
@@ -319,7 +336,7 @@ export default class Client {
    * 
    * Returns an empty array if the user hasn't posted anything.
    * @param {string} [username] The user to search.
-   * @returns {Character[]} An array of characters.
+   * @returns {Promise<Character[]>} An array of characters.
    */
   async getAllCharacters(username = this.getUser().username) {
 

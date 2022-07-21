@@ -39,6 +39,12 @@ export default class Account {
 
   }
 
+  async createStory(slug, props) {
+
+    return await this.#client.createStory(this.username, slug, props);
+
+  }
+
   async delete(password) {
 
     await this.#client.deleteAccount(this.constructor, this.username, password);
