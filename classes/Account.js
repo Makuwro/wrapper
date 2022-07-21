@@ -13,7 +13,6 @@ export default class Account {
     this.username = data.username;
     this.displayName = data.displayName;
     this.id = data.id;
-    this.avatarPath = data.avatarPath;
     this.bannerPath = data.bannerPath;
     this.css = data.css;
     this.terms = data.terms;
