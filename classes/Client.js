@@ -83,6 +83,20 @@ export default class Client {
   }
 
   /**
+   * Requests the server to create a character.
+   * @since v1.0.0
+   * @param {*} username 
+   * @param {*} slug 
+   * @param {*} props 
+   * @returns 
+   */
+  async createCharacter(username = this.getUser().username, slug, props) {
+
+    return await this.createContent(Character, username, slug, props);
+
+  }
+
+  /**
    * Creates a new comment.
    * 
    * Errors if the client doesn't have permission to leave comments, or if the parent doesn't exist.
@@ -95,16 +109,7 @@ export default class Client {
    */
   async createComment(parentContentType, parentUsername, parentSlug, content) {
 
-    // Create the FormData.
-    const body = new FormData();
-    body.append("content", content);
-
-    const data = await this.requestREST(`contents/${parentContentType.apiDirectoryName}/${parentUsername}/${parentSlug}/comments`, {
-      method: "POST",
-      body
-    }, true);
-
-    return new Comment(data, this);
+    return await this.createContent(parentContentType, parentUsername, parentSlug, {content}, true);
 
   }
 
@@ -116,13 +121,30 @@ export default class Client {
    * @param {string} username The owner of the content.
    * @returns 
    */
-  async createContent(type, username, slug) {
+  async createContent(type, username, slug, props, isComment) {
 
-    const data = await this.requestREST(`contents/${type.apiDirectoryName}/${username}${slug ? `/${slug}` : ""}`, {
-      method: "POST"
+    if (props) {
+
+      // Add all the fields to a FormData object.
+      const formData = new FormData();
+      const fieldsKeys = Object.keys(props);
+      for (let i = 0; fieldsKeys.length > i; i++) {
+
+        const key = fieldsKeys[i];
+        formData.append(key, props[key]);
+
+      }
+
+      props = formData;
+
+    }
+
+    const data = await this.requestREST(`contents/${type.apiDirectoryName}${username ? `/${username}` : ""}${slug ? `/${slug}` : ""}${isComment && type !== Comment ? "/comments" : ""}`, {
+      method: "POST",
+      ...(props ? {body: props} : {})
     }, true);
 
-    return new type(data, this);
+    return new (isComment ? Comment : type)(data, this);
 
   }
   

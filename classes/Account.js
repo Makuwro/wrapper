@@ -24,13 +24,19 @@ export default class Account {
 
   async createArt() {
 
-    return this.#client.createArt(this.username);
+    return await this.#client.createArt(this.username);
 
   }
 
   async createBlogPost() {
 
-    return this.#client.createBlogPost(this.username);
+    return await this.#client.createBlogPost(this.username);
+
+  }
+
+  async createCharacter(slug, props) {
+
+    return await this.#client.createCharacter(this.username, slug, props);
 
   }
 
