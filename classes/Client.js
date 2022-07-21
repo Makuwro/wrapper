@@ -131,7 +131,8 @@ export default class Client {
       for (let i = 0; fieldsKeys.length > i; i++) {
 
         const key = fieldsKeys[i];
-        formData.append(key, props[key]);
+        const value = props[key];
+        formData.append(key, typeof value === "string" ? value : JSON.stringify(props[key]));
 
       }
 
