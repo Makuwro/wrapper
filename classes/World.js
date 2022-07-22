@@ -1,4 +1,4 @@
-import Content from "./Content";
+import Content from "./Content.js";
 
 export default class World extends Content {
 
