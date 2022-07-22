@@ -5,6 +5,7 @@ import BlogPost from "./BlogPost.js";
 import Character from "./Character.js";
 import Story from "./Story.js";
 import Comment from "./Comment.js";
+import World from "./World.js";
 
 /**
  * Represents a client.
@@ -213,12 +214,20 @@ export default class Client {
    * @since v1.0.0
    * @param {string} username 
    * @param {string} slug 
-   * @param {object} props 
+   * @param {object} props
+   * @param {string} props.title
+   * @param {string} [props.description]
    * @returns {Promise<Story>}
    */
   async createStory(username = this.getUser()?.username, slug, props) {
 
     return await this.createContent(Story, username, slug, props);
+
+  }
+
+  async createWorld(username = this.getUser()?.username, slug, props) {
+
+    return await this.createContent(World, username, slug, props);
 
   }
 

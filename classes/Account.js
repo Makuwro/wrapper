@@ -45,6 +45,12 @@ export default class Account {
 
   }
 
+  async createWorld(slug, props) {
+
+    return await this.#client.createWorld(this.username, slug, props);
+    
+  }
+
   async delete(password) {
 
     await this.#client.deleteAccount(this.constructor, this.username, password);
