@@ -81,9 +81,9 @@ export default class Account {
 
   }
 
-  async getBlogPosts() {
+  async getAllStories() {
 
-    return this.#client.getBlogPosts(this.username);
+    return this.#client.getAllStories(this.username);
 
   }
 
