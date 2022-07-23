@@ -63,33 +63,15 @@ export default class Account {
 
   }
 
-  async getAllArt() {
+  async getContent(contentType, slug) {
 
-    return this.#client.getAllArt(this.username);
-
-  }
-
-  async getAllBlogPosts() {
-
-    return this.#client.getAllBlogPosts(this.username);
+    return this.#client.getContent(contentType, this.username, slug);
 
   }
 
-  async getAllCharacters() {
+  async getAllContent(contentType) {
 
-    return this.#client.getAllCharacters(this.username);
-
-  }
-
-  async getAllNotifications() {
-
-    return this.#client.getAllNotifications(this.username);
-
-  }
-
-  async getAllStories() {
-
-    return this.#client.getAllStories(this.username);
+    return this.#client.getAllContent(contentType, this.username);
 
   }
 

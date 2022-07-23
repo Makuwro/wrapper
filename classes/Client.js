@@ -315,45 +315,6 @@ export default class Client {
   }
 
   /**
-   * Gets all art that a user posted.
-   * 
-   * Returns an empty array if the user hasn't posted anything.
-   * @param {string} [username] The content owner's username. Defaults to the authenticated user's username.
-   * @returns {Art[]} An array of art.
-   */
-  async getAllArt(username = this.getUser().username) {
-
-    return await this.getAllContent(Art, username);
-
-  }
-
-  /**
-   * Gets all blog posts that a user posted.
-   * 
-   * Returns an empty array if the user hasn't posted anything.
-   * @param {string} [username] The content owner's username. Defaults to the authenticated user's username.
-   * @returns {Promise<BlogPost[]>} An array of blog posts.
-   */
-  async getAllBlogPosts(username = this.getUser()) {
-
-    return await this.getAllContent(BlogPost, username);
-
-  }
-
-  /**
-   * Gets all characters that a user posted.
-   * 
-   * Returns an empty array if the user hasn't posted anything.
-   * @param {string} [username] The user to search.
-   * @returns {Promise<Character[]>} An array of characters.
-   */
-  async getAllCharacters(username = this.getUser().username) {
-
-    return await this.getAllContent(Character, username);
-
-  }
-
-  /**
    * 
    * @since v1.0.0
    * @param {Art | BlogPost | Character | Story} type 
@@ -394,69 +355,6 @@ export default class Client {
     }
 
     return data;
-
-  }
-
-  /**
-   * 
-   * @param {*} username 
-   * @returns 
-   */
-  async getAllNotifications(username = this.getUser().username) {
-
-    return await this.getAllContent(Notification, username);
-
-  }
-
-  /**
-   * 
-   * @param {*} username 
-   * @returns 
-   */
-  async getAllStories(username = this.getUser().username) {
-
-    return await this.getAllContent(Story, username);
-
-  }
-
-  /**
-   * 
-   * @since v1.0.0
-   * @param {*} username 
-   * @param {*} slug 
-   * @returns {Promise<Art>}
-   */
-  async getArt(username = this.getUser().username, slug) {
-
-    return await this.getContent(Art, username, slug);
-
-  }
-
-  /**
-   * Gets a blog post.
-   * 
-   * Errors if the blog post doesn't exist.
-   * @param {string} [username] The content owner's username. Defaults to the authenticated user's username.
-   * @param {string} slug 
-   * @returns {Promise<BlogPost>} The blog post.
-   */
-  async getBlogPost(username = this.getUser().username, slug) {
-
-    return this.getContent(BlogPost, username, slug);
-
-  }
-
-  /**
-   * Gets a character.
-   * 
-   * Errors if the character doesn't exist.
-   * @param {string} [username] The content owner's username. Defaults to the authenticated user's username.
-   * @param {string} slug The unique slug of the character.
-   * @returns {Promise<Character>} The character.
-   */
-  async getCharacter(username = this.getUser().username, slug) {
-
-    return this.getContent(Character, username, slug);
 
   }
 
@@ -526,18 +424,6 @@ export default class Client {
 
     // Return the user object.
     return user;
-
-  }
-
-  /**
-   * 
-   * @param {*} username 
-   * @param {*} slug 
-   * @returns 
-   */
-  async getStory(username, slug) {
-
-    return await this.getContent(Story, username, slug);
 
   }
 
