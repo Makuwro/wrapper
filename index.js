@@ -8,3 +8,5 @@ export {default as Content} from "./classes/Content.js";
 export {default as Notification} from "./classes/Notification.js";
 export {default as Team} from "./classes/Team.js";
 export {default as User} from "./classes/User.js";
+export {default as World} from "./classes/World.js";
+export {default as Story} from "./classes/Story.js";
