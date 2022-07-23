@@ -64,9 +64,9 @@ export default class Client {
    * @param {*} username 
    * @returns 
    */
-  async createArt(username) {
+  async createArt(username, slug, props) {
 
-    return await this.createContent(Art, username);
+    return await this.createContent(Art, username, slug, props);
 
   }
 

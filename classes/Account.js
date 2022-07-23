@@ -21,9 +21,9 @@ export default class Account {
 
   }
 
-  async createArt() {
+  async createArt(slug, props) {
 
-    return await this.#client.createArt(this.username);
+    return await this.#client.createArt(this.username, slug, props);
 
   }
 
