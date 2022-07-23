@@ -136,7 +136,7 @@ export default class Client {
 
         const key = fieldsKeys[i];
         const value = props[key];
-        formData.append(key, typeof value === "string" ? value : JSON.stringify(props[key]));
+        formData.append(key, typeof value === "string" || value instanceof File ? value : JSON.stringify(props[key]));
 
       }
 
